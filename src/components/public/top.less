@@ -1,0 +1,35 @@
+@import "../const.less";
+.vue-top-bar {
+    height: 44px;
+    background: @gray;
+    text-align: center;
+    line-height: 44px;
+    width: 100%;
+    position: relative;
+    &::after {
+        content: " ";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        height: 1px;
+        border-bottom: 1px solid #D9D9D9;
+        color: @line;
+        transform-origin: 0 100%;
+        transform: scaleY(0.5);
+    }
+}
+
+.vue-top-fixed {
+    position: fixed;
+    top: 0px;
+    z-index: 999;
+}
+
+.icon-retreat {
+    position: absolute;
+    left: 0px; padding-left:10px; 
+    &:before {
+        content: "\e633";
+    }
+}
