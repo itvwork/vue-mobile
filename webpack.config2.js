@@ -1,34 +1,33 @@
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var webpack=require('webpack');
-module.exports = function(app) {
-    return {
-        "resolve": {
-            "extensions": [
-                ".ts",
-                ".js",
-                ".vue"
-            ],
-            "modules": [
-                "./node_modules"
-            ],
-            "symlinks": true
-        },
-        entry: {
-            index: './src/index.js',
-            vendor: ['babel-polyfill']
-        },
-        output: {
-            filename: '[name].js',
-            publicPath: '/style/mobile/js/',
-            path: path.resolve(__dirname, 'dist/style/mobile/js/')
+var webpack = require('webpack');
+module.exports = {
+    "resolve": {
+        "extensions": [
+            ".ts",
+            ".js",
+            ".vue"
+        ],
+        "modules": [
+            "./node_modules"
+        ],
+        "symlinks": true
+    },
+    entry: {
+        index: './src/index.js',
+        vendor: ['babel-polyfill']
+    },
+    output: {
+        filename: '[name].js',
+        publicPath: '/style/mobile/js/',
+        path: path.resolve(__dirname, 'dist/style/mobile/js/')
 
-        },
-        module: {
-            rules: [{
+    },
+    module: {
+        rules: [{
                 test: /\.vue$/,
                 loader: 'vue-loader',
-                
+
 
             }, {
                 test: /\.css$/,
@@ -45,7 +44,7 @@ module.exports = function(app) {
             {
                 test: /\.less$/,
                 use: ['style-loader', 'css-loader', 'less-loader']
-               // loader: 'style-loader!css-loader!less-loader'
+                // loader: 'style-loader!css-loader!less-loader'
             },
             {
                 test: /\.(png|jpg|gif)$/,
@@ -67,9 +66,29 @@ module.exports = function(app) {
                     prefix: 'font'
                 }
             }
-            ]
-        },
-        plugins: app
+        ]
+    },
+    plugins: [
+      
+        new webpack.NoEmitOnErrorsPlugin(),
+     
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                postcss: function () {
+                    return [
+                        require("autoprefixer")({
+                            browsers: ['ie>=8', '>1% in CN']
+                        })
+                    ]
+                }
+            }
+        })
+        // new webpack.DefinePlugin({
+        //     'process.env': {
+        //         NODE_ENV: 'production',
 
-    }
+        //     }
+        // })
+    ]
+
 }

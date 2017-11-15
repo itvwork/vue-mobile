@@ -34,60 +34,55 @@ function clean(done) {
 }
 
 
-function devWebpack(done) {
-    webpack(config([
-        new webpack.optimize.DedupePlugin(),
-        //允许错误不打断程序
-        new webpack.NoEmitOnErrorsPlugin(),
-      
-        new webpack.LoaderOptionsPlugin({
-            options: {
-                postcss: function () {
-                    return [
-                        require("autoprefixer")({
-                            browsers: ['ie>=8', '>1% in CN']
-                        })
-                    ]
-                }
-            }
-        })
-    ]), function (err, stats) {
-        //  compileLogger(err, stats);
 
+
+var devCompiler=devCompiler=webpack(config);
+function devWebpack(done) {
+    devCompiler.run(function (err, stats) {
+        if (err) {
+            throw new gutil.PluginError("webpack:build-dev", err);
+            return;
+        }
+        gutil.log("[webpack:build-dev]", stats.toString({
+            children: false, // 关闭抽离css 插件信息
+            chunks: false, //关闭输出打包js文件名
+            colors: true //颜色
+        }));
         done();
     });
+  
 }
 
-function bulidWebpack() {
-    webpack(config([
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        }),
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: 'production',
+// function bulidWebpack() {
+//     webpack(config([
+//         new webpack.optimize.UglifyJsPlugin({
+//             compress: {
+//                 warnings: false
+//             }
+//         }),
+//         new webpack.DefinePlugin({
+//             'process.env': {
+//                 NODE_ENV: 'production',
                
-            }
-        }),
-        new webpack.optimize.DedupePlugin(), //去重
-        new webpack.LoaderOptionsPlugin({
-            options: {
-                postcss: function () {
-                    return [
-                        require("autoprefixer")({
-                            browsers: ['ie>=8', '>1% in CN']
-                        })
-                    ]
-                }
-            }
-        })
-    ]), function (err, stats) {
-        console.log(err)
-    })
+//             }
+//         }),
+//         new webpack.optimize.DedupePlugin(), //去重
+//         new webpack.LoaderOptionsPlugin({
+//             options: {
+//                 postcss: function () {
+//                     return [
+//                         require("autoprefixer")({
+//                             browsers: ['ie>=8', '>1% in CN']
+//                         })
+//                     ]
+//                 }
+//             }
+//         })
+//     ]), function (err, stats) {
+//         console.log(err)
+//     })
 
-}
+// }
 
 
 
@@ -124,7 +119,7 @@ function connectServer(done) {
 
 
 
-function watch() {
+function watch(done) {
     var wHtml = gulp.watch(src.html, gulp.series(html, reload));
     wHtml.on('change', function (event) { // console.log(event);
         if (event.type === 'deleted') {
@@ -133,13 +128,12 @@ function watch() {
         }
     });
     gulp.watch([
-        './src/**/*.vue',
-        './src/**/*.js',
-        '*.js',
-        './src/components/**/*.less'
+        './src/**/*',
+        '*.js'
     ], gulp.series(devWebpack, reload));
     gulp.watch('./src/style/**/*.less', css);
     gulp.watch(src.img, img);
+    done();
 
 }
 
@@ -173,7 +167,7 @@ function img(done) {
 
 
 function reload() {
-    return gulp.src('dist/')
+    return gulp.src('dist/**/*')
         .pipe(connect.reload()); //自动刷新
 }
 gulp.task("default", gulp.series(clean, devWebpack, html, css, img, connectServer, watch));

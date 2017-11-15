@@ -1,10 +1,19 @@
 
 <template lang="html">
-      <router-view></router-view>
+      <section m class="app-main-wrap">
+            <router-view></router-view>
+            <vuk-alert></vuk-alert>
+      </section>
 </template>
-<script>
 
+<script>
+import VukAlert from "./components/VukAlert/index.vue";
 export default {
-    
+  data() {
+    return {};
+  },
+  components: {
+    VukAlert
+  }
 };
 </script>

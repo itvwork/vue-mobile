@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 import App from './app';
 import routes from './router/index'
 import './style/index.less';
+import stateManage from './modules/index';
 
 
 
@@ -16,9 +17,12 @@ const router = new VueRouter({
     routes
 })
 
+var store = new Vuex.Store(stateManage);
+
 
 new Vue({
     el: '#app',
+    store,
     router: router,
     render: h => h(App)
     // data: {

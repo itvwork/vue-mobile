@@ -1,10 +1,10 @@
 @import "../const.less";
 .vue-top-bar {
-    height: 44px;
+    height: 11.645mm;
     background: @gray;
     text-align: center;
     line-height: 44px;
-    width: 100%;
+    width: 1rem;
     position: relative;
     &::after {
         content: " ";
@@ -22,14 +22,15 @@
 
 .vue-top-fixed {
     position: fixed;
-    top: 0px;
-    z-index: 999;
+    top: 0px;   
+    z-index: 10;
 }
 
 .icon-retreat {
     position: absolute;
     left: 0px; padding-left:10px; 
+    font-size: 6mm;
     &:before {
-        content: "\e633";
+        content: "\e779";
     }
 }

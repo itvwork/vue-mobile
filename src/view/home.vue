@@ -1,15 +1,13 @@
 <template lang="html">
-    <section m>
-        <vue-top></vue-top>
-    
-    
-    </section>
+    <section m class="page-wrap">
+         <vuk-top></vuk-top>
+    </section>    
 </template>
 <script>
-import VueTop from '../components/public/top.vue'
+import VukTop from "../components/VukTop";
 export default {
-   components: {
-    VueTop
-  },
+  components: {
+    VukTop
+  }
 };
 </script>

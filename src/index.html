@@ -14,6 +14,17 @@
         <router-view></router-view>
     </section>
     <script src="/style/mobile/js/index.js"></script>
+    <div id="pop">
+        
+    </div>
 </body>
-
 </html>
+<script>
+    size();
+    window.addEventListener('resize', function () {
+       size();
+    })
+    function size() {
+        document.getElementsByTagName('html')[0].style.fontSize = window.innerWidth + 'px';
+    }
+</script>
