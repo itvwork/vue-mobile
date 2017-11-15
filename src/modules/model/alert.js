@@ -17,15 +17,11 @@ const actions = {
 
 // mutations
 const mutations = {
-    alertShow(state, {
-        title,
-        info,
-        bgIndex
-    }) {
+    alertShow(state, {bgIndex,title,info}) {
         let alert = state;
         alert.title = title;
         alert.info = info;
-        alert.bgIndex = bgIndex;
+        alert.bgIndex =bgIndex;
         alert.toggle = true;
     },
     alertHide(state) {

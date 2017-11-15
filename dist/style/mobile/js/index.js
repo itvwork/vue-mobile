@@ -229,8 +229,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!./index.less", function() {
-			var newContent = require("!!../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!./index.less");
+		module.hot.accept("!!../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!./index.less", function() {
+			var newContent = require("!!../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!./index.less");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -11010,15 +11010,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 var _vuex = __webpack_require__(91);
 
 exports.default = {
-  computed: _extends({}, (0, _vuex.mapGetters)({
-    vuk: 'getState'
+  computed: _extends({}, (0, _vuex.mapState)(['alert'])),
+  created: function created() {
+    console.log(this);
+  },
 
-  }), (0, _vuex.mapState)(['alert'])),
-  created: function created() {}
+  methods: _extends({}, (0, _vuex.mapMutations)(['alertHide', 'alertShow']))
+
 };
 
 /***/ }),
@@ -11108,9 +11114,9 @@ var state = {
 // mutations
 var mutations = {
     alertShow: function alertShow(state, _ref) {
-        var title = _ref.title,
-            info = _ref.info,
-            bgIndex = _ref.bgIndex;
+        var bgIndex = _ref.bgIndex,
+            title = _ref.title,
+            info = _ref.info;
 
         var alert = state;
         alert.title = title;
@@ -11140,7 +11146,7 @@ exports = module.exports = __webpack_require__(93)(undefined);
 
 
 // module
-exports.push([module.i, "@font-face {\n  font-family: 'iconfont';\n  /* project id 474110 */\n  src: url('//at.alicdn.com/t/font_474110_0t61dqafx1hmpldi.eot');\n  src: url('//at.alicdn.com/t/font_474110_0t61dqafx1hmpldi.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_474110_0t61dqafx1hmpldi.woff') format('woff'), url('//at.alicdn.com/t/font_474110_0t61dqafx1hmpldi.ttf') format('truetype'), url('//at.alicdn.com/t/font_474110_0t61dqafx1hmpldi.svg#iconfont') format('svg');\n}\n.icon {\n  font-family: \"iconfont\" !important;\n  font-size: 5mm;\n  font-style: normal;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  color: #999;\n}\n[m],\nbody,\nhtml,\ndiv,\nsection,\ninput,\nbutton,\narticle {\n  padding: 0px;\n  margin: 0px;\n  list-style: none;\n  text-decoration: none;\n  font-style: normal;\n  font-weight: normal;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  -o-appearance: none;\n  appearance: none;\n  border: none;\n  background-color: transparent;\n  outline: none;\n}\n.font-size-main {\n  font-size: 4mm;\n}\nhtml,\nbody {\n  background-color: #fafbfd;\n  height: 100%;\n  font-family: -apple-system-font, \"Helvetica Neue\", sans-serif;\n}\n.app-main-wrap {\n  position: absolute;\n  top: 0px;\n  left: 0px;\n  right: 0px;\n  bottom: 0px;\n  z-index: 1;\n  font-size: 4mm;\n}\n.vuk-bg {\n  background-color: rgba(0, 0, 0, 0.4);\n  position: fixed;\n  top: 0px;\n  left: 0px;\n  bottom: 0px;\n  right: 0px;\n  z-index: 99;\n}\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n@font-face {\n  font-family: 'iconfont';\n  /* project id 474110 */\n  src: url('//at.alicdn.com/t/font_474110_0t61dqafx1hmpldi.eot');\n  src: url('//at.alicdn.com/t/font_474110_0t61dqafx1hmpldi.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_474110_0t61dqafx1hmpldi.woff') format('woff'), url('//at.alicdn.com/t/font_474110_0t61dqafx1hmpldi.ttf') format('truetype'), url('//at.alicdn.com/t/font_474110_0t61dqafx1hmpldi.svg#iconfont') format('svg');\n}\n.icon {\n  font-family: \"iconfont\" !important;\n  font-size: 5mm;\n  font-style: normal;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  color: #999;\n}\n[m],\nbody,\nhtml,\ndiv,\nsection,\ninput,\nbutton,\narticle {\n  padding: 0px;\n  margin: 0px;\n  list-style: none;\n  text-decoration: none;\n  font-style: normal;\n  font-weight: normal;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  -o-appearance: none;\n  appearance: none;\n  border: none;\n  background-color: transparent;\n  outline: none;\n}\n.font-size-main {\n  font-size: 4mm;\n}\nhtml,\nbody {\n  background-color: #fafbfd;\n  height: 100%;\n  font-family: -apple-system-font, \"Helvetica Neue\", sans-serif;\n}\n.app-main-wrap {\n  position: absolute;\n  top: 0px;\n  left: 0px;\n  right: 0px;\n  bottom: 0px;\n  z-index: 1;\n  font-size: 4mm;\n}\n.vuk-bg {\n  background-color: rgba(0, 0, 0, 0.4);\n  position: fixed;\n  top: 0px;\n  left: 0px;\n  bottom: 0px;\n  right: 0px;\n  z-index: 99;\n}\n/*!\n * animate.css -http://daneden.me/animate\n * Version - 3.5.2\n * Licensed under the MIT license - http://opensource.org/licenses/MIT\n *\n * Copyright (c) 2017 Daniel Eden\n */\n.animated {\n  animation-duration: 0.4s;\n  animation-fill-mode: both;\n}\n.ani2 {\n  animation-duration: 0.2s;\n  animation-fill-mode: both;\n}\n.animated.infinite {\n  animation-iteration-count: infinite;\n}\n.animated.hinge {\n  animation-duration: 5s;\n}\n.animated.flipOutX,\n.animated.flipOutY,\n.animated.bounceIn,\n.animated.bounceOut {\n  animation-duration: .75s;\n}\n@keyframes bounce {\n  from,\n  20%,\n  53%,\n  80%,\n  to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n    transform: translate3d(0, 0, 0);\n  }\n  40%,\n  43% {\n    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n    transform: translate3d(0, -30px, 0);\n  }\n  70% {\n    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n    transform: translate3d(0, -15px, 0);\n  }\n  90% {\n    transform: translate3d(0, -4px, 0);\n  }\n}\n.bounce {\n  animation-name: bounce;\n  transform-origin: center bottom;\n}\n@keyframes flash {\n  from,\n  50%,\n  to {\n    opacity: 1;\n  }\n  25%,\n  75% {\n    opacity: 0;\n  }\n}\n.flash {\n  animation-name: flash;\n}\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n@keyframes pulse {\n  from {\n    transform: scale3d(1, 1, 1);\n  }\n  50% {\n    transform: scale3d(1.05, 1.05, 1.05);\n  }\n  to {\n    transform: scale3d(1, 1, 1);\n  }\n}\n.pulse {\n  animation-name: pulse;\n}\n@keyframes rubberBand {\n  from {\n    transform: scale3d(1, 1, 1);\n  }\n  30% {\n    transform: scale3d(1.25, 0.75, 1);\n  }\n  40% {\n    transform: scale3d(0.75, 1.25, 1);\n  }\n  50% {\n    transform: scale3d(1.15, 0.85, 1);\n  }\n  65% {\n    transform: scale3d(0.95, 1.05, 1);\n  }\n  75% {\n    transform: scale3d(1.05, 0.95, 1);\n  }\n  to {\n    transform: scale3d(1, 1, 1);\n  }\n}\n.rubberBand {\n  animation-name: rubberBand;\n}\n@keyframes shake {\n  from,\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n  10%,\n  30%,\n  50%,\n  70%,\n  90% {\n    transform: translate3d(-10px, 0, 0);\n  }\n  20%,\n  40%,\n  60%,\n  80% {\n    transform: translate3d(10px, 0, 0);\n  }\n}\n.shake {\n  animation-name: shake;\n}\n@keyframes headShake {\n  0% {\n    transform: translateX(0);\n  }\n  6.5% {\n    transform: translateX(-6px) rotateY(-9deg);\n  }\n  18.5% {\n    transform: translateX(5px) rotateY(7deg);\n  }\n  31.5% {\n    transform: translateX(-3px) rotateY(-5deg);\n  }\n  43.5% {\n    transform: translateX(2px) rotateY(3deg);\n  }\n  50% {\n    transform: translateX(0);\n  }\n}\n.headShake {\n  animation-timing-function: ease-in-out;\n  animation-name: headShake;\n}\n@keyframes swing {\n  20% {\n    transform: rotate3d(0, 0, 1, 15deg);\n  }\n  40% {\n    transform: rotate3d(0, 0, 1, -10deg);\n  }\n  60% {\n    transform: rotate3d(0, 0, 1, 5deg);\n  }\n  80% {\n    transform: rotate3d(0, 0, 1, -5deg);\n  }\n  to {\n    transform: rotate3d(0, 0, 1, 0deg);\n  }\n}\n.swing {\n  transform-origin: top center;\n  animation-name: swing;\n}\n@keyframes tada {\n  from {\n    transform: scale3d(1, 1, 1);\n  }\n  10%,\n  20% {\n    transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);\n  }\n  30%,\n  50%,\n  70%,\n  90% {\n    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);\n  }\n  40%,\n  60%,\n  80% {\n    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);\n  }\n  to {\n    transform: scale3d(1, 1, 1);\n  }\n}\n.tada {\n  animation-name: tada;\n}\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n@keyframes wobble {\n  from {\n    transform: none;\n  }\n  15% {\n    transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);\n  }\n  30% {\n    transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);\n  }\n  45% {\n    transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);\n  }\n  60% {\n    transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);\n  }\n  75% {\n    transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);\n  }\n  to {\n    transform: none;\n  }\n}\n.wobble {\n  animation-name: wobble;\n}\n@keyframes jello {\n  from,\n  11.1%,\n  to {\n    transform: none;\n  }\n  22.2% {\n    transform: skewX(-12.5deg) skewY(-12.5deg);\n  }\n  33.3% {\n    transform: skewX(6.25deg) skewY(6.25deg);\n  }\n  44.4% {\n    transform: skewX(-3.125deg) skewY(-3.125deg);\n  }\n  55.5% {\n    transform: skewX(1.5625deg) skewY(1.5625deg);\n  }\n  66.6% {\n    transform: skewX(-0.78125deg) skewY(-0.78125deg);\n  }\n  77.7% {\n    transform: skewX(0.390625deg) skewY(0.390625deg);\n  }\n  88.8% {\n    transform: skewX(-0.1953125deg) skewY(-0.1953125deg);\n  }\n}\n.jello {\n  animation-name: jello;\n  transform-origin: center;\n}\n@keyframes bounceIn {\n  from,\n  20%,\n  40%,\n  60%,\n  80%,\n  to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n  0% {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n  20% {\n    transform: scale3d(1.1, 1.1, 1.1);\n  }\n  40% {\n    transform: scale3d(0.9, 0.9, 0.9);\n  }\n  60% {\n    opacity: 1;\n    transform: scale3d(1.03, 1.03, 1.03);\n  }\n  80% {\n    transform: scale3d(0.97, 0.97, 0.97);\n  }\n  to {\n    opacity: 1;\n    transform: scale3d(1, 1, 1);\n  }\n}\n.bounceIn {\n  animation-name: bounceIn;\n}\n@keyframes bounceInDown {\n  from,\n  60%,\n  75%,\n  90%,\n  to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n  0% {\n    opacity: 0;\n    transform: translate3d(0, -3000px, 0);\n  }\n  60% {\n    opacity: 1;\n    transform: translate3d(0, 25px, 0);\n  }\n  75% {\n    transform: translate3d(0, -10px, 0);\n  }\n  90% {\n    transform: translate3d(0, 5px, 0);\n  }\n  to {\n    transform: none;\n  }\n}\n.bounceInDown {\n  animation-name: bounceInDown;\n}\n@keyframes bounceInLeft {\n  from,\n  60%,\n  75%,\n  90%,\n  to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n  0% {\n    opacity: 0;\n    transform: translate3d(-3000px, 0, 0);\n  }\n  60% {\n    opacity: 1;\n    transform: translate3d(25px, 0, 0);\n  }\n  75% {\n    transform: translate3d(-10px, 0, 0);\n  }\n  90% {\n    transform: translate3d(5px, 0, 0);\n  }\n  to {\n    transform: none;\n  }\n}\n.bounceInLeft {\n  animation-name: bounceInLeft;\n}\n@keyframes bounceInRight {\n  from,\n  60%,\n  75%,\n  90%,\n  to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n  from {\n    opacity: 0;\n    transform: translate3d(3000px, 0, 0);\n  }\n  60% {\n    opacity: 1;\n    transform: translate3d(-25px, 0, 0);\n  }\n  75% {\n    transform: translate3d(10px, 0, 0);\n  }\n  90% {\n    transform: translate3d(-5px, 0, 0);\n  }\n  to {\n    transform: none;\n  }\n}\n.bounceInRight {\n  animation-name: bounceInRight;\n}\n@keyframes bounceInUp {\n  from,\n  60%,\n  75%,\n  90%,\n  to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n  from {\n    opacity: 0;\n    transform: translate3d(0, 3000px, 0);\n  }\n  60% {\n    opacity: 1;\n    transform: translate3d(0, -20px, 0);\n  }\n  75% {\n    transform: translate3d(0, 10px, 0);\n  }\n  90% {\n    transform: translate3d(0, -5px, 0);\n  }\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n.bounceInUp {\n  animation-name: bounceInUp;\n}\n@keyframes bounceOut {\n  20% {\n    transform: scale3d(0.9, 0.9, 0.9);\n  }\n  50%,\n  55% {\n    opacity: 1;\n    transform: scale3d(1.1, 1.1, 1.1);\n  }\n  to {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3);\n  }\n}\n.bounceOut {\n  animation-name: bounceOut;\n}\n@keyframes bounceOutDown {\n  20% {\n    transform: translate3d(0, 10px, 0);\n  }\n  40%,\n  45% {\n    opacity: 1;\n    transform: translate3d(0, -20px, 0);\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n}\n.bounceOutDown {\n  animation-name: bounceOutDown;\n}\n@keyframes bounceOutLeft {\n  20% {\n    opacity: 1;\n    transform: translate3d(20px, 0, 0);\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0);\n  }\n}\n.bounceOutLeft {\n  animation-name: bounceOutLeft;\n}\n@keyframes bounceOutRight {\n  20% {\n    opacity: 1;\n    transform: translate3d(-20px, 0, 0);\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0);\n  }\n}\n.bounceOutRight {\n  animation-name: bounceOutRight;\n}\n@keyframes bounceOutUp {\n  20% {\n    transform: translate3d(0, -10px, 0);\n  }\n  40%,\n  45% {\n    opacity: 1;\n    transform: translate3d(0, 20px, 0);\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0);\n  }\n}\n.bounceOutUp {\n  animation-name: bounceOutUp;\n}\n@keyframes fadeIn {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n.fadeIn {\n  animation-name: fadeIn;\n}\n@keyframes fadeInDown {\n  from {\n    opacity: 0;\n    transform: translate3d(0, -100%, 0);\n  }\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n.fadeInDown {\n  animation-name: fadeInDown;\n}\n@keyframes fadeInDownBig {\n  from {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0);\n  }\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n.fadeInDownBig {\n  animation-name: fadeInDownBig;\n}\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n  }\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n.fadeInLeft {\n  animation-name: fadeInLeft;\n}\n@keyframes fadeInLeftBig {\n  from {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0);\n  }\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n.fadeInLeftBig {\n  animation-name: fadeInLeftBig;\n}\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n  }\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n.fadeInRight {\n  animation-name: fadeInRight;\n}\n@keyframes fadeInRightBig {\n  from {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0);\n  }\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n.fadeInRightBig {\n  animation-name: fadeInRightBig;\n}\n@keyframes fadeInUp {\n  from {\n    opacity: 0;\n    transform: translate3d(0, 100%, 0);\n  }\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n.fadeInUp {\n  animation-name: fadeInUp;\n}\n@keyframes fadeInUpBig {\n  from {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n.fadeInUpBig {\n  animation-name: fadeInUpBig;\n}\n@keyframes fadeOut {\n  from {\n    opacity: 1;\n  }\n  to {\n    opacity: 0;\n  }\n}\n.fadeOut {\n  animation-name: fadeOut;\n}\n@keyframes fadeOutDown {\n  from {\n    opacity: 1;\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(0, 100%, 0);\n  }\n}\n.fadeOutDown {\n  animation-name: fadeOutDown;\n}\n@keyframes fadeOutDownBig {\n  from {\n    opacity: 1;\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n}\n.fadeOutDownBig {\n  animation-name: fadeOutDownBig;\n}\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1;\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0);\n  }\n}\n.fadeOutLeft {\n  animation-name: fadeOutLeft;\n}\n@keyframes fadeOutLeftBig {\n  from {\n    opacity: 1;\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0);\n  }\n}\n.fadeOutLeftBig {\n  animation-name: fadeOutLeftBig;\n}\n@keyframes fadeOutRight {\n  from {\n    opacity: 1;\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0);\n  }\n}\n.fadeOutRight {\n  animation-name: fadeOutRight;\n}\n@keyframes fadeOutRightBig {\n  from {\n    opacity: 1;\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0);\n  }\n}\n.fadeOutRightBig {\n  animation-name: fadeOutRightBig;\n}\n@keyframes fadeOutUp {\n  from {\n    opacity: 1;\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(0, -100%, 0);\n  }\n}\n.fadeOutUp {\n  animation-name: fadeOutUp;\n}\n@keyframes fadeOutUpBig {\n  from {\n    opacity: 1;\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0);\n  }\n}\n.fadeOutUpBig {\n  animation-name: fadeOutUpBig;\n}\n@keyframes flip {\n  from {\n    transform: perspective(400px) rotate3d(0, 1, 0, -360deg);\n    animation-timing-function: ease-out;\n  }\n  40% {\n    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg);\n    animation-timing-function: ease-out;\n  }\n  50% {\n    transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);\n    animation-timing-function: ease-in;\n  }\n  80% {\n    transform: perspective(400px) scale3d(0.95, 0.95, 0.95);\n    animation-timing-function: ease-in;\n  }\n  to {\n    transform: perspective(400px);\n    animation-timing-function: ease-in;\n  }\n}\n.animated.flip {\n  -webkit-backface-visibility: visible;\n  backface-visibility: visible;\n  animation-name: flip;\n}\n@keyframes flipInX {\n  from {\n    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);\n    animation-timing-function: ease-in;\n    opacity: 0;\n  }\n  40% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);\n    animation-timing-function: ease-in;\n  }\n  60% {\n    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);\n    opacity: 1;\n  }\n  80% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);\n  }\n  to {\n    transform: perspective(400px);\n  }\n}\n.flipInX {\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n  animation-name: flipInX;\n}\n@keyframes flipInY {\n  from {\n    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);\n    animation-timing-function: ease-in;\n    opacity: 0;\n  }\n  40% {\n    transform: perspective(400px) rotate3d(0, 1, 0, -20deg);\n    animation-timing-function: ease-in;\n  }\n  60% {\n    transform: perspective(400px) rotate3d(0, 1, 0, 10deg);\n    opacity: 1;\n  }\n  80% {\n    transform: perspective(400px) rotate3d(0, 1, 0, -5deg);\n  }\n  to {\n    transform: perspective(400px);\n  }\n}\n.flipInY {\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n  animation-name: flipInY;\n}\n@keyframes flipOutX {\n  from {\n    transform: perspective(400px);\n  }\n  30% {\n    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);\n    opacity: 1;\n  }\n  to {\n    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);\n    opacity: 0;\n  }\n}\n.flipOutX {\n  animation-name: flipOutX;\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n}\n@keyframes flipOutY {\n  from {\n    transform: perspective(400px);\n  }\n  30% {\n    transform: perspective(400px) rotate3d(0, 1, 0, -15deg);\n    opacity: 1;\n  }\n  to {\n    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);\n    opacity: 0;\n  }\n}\n.flipOutY {\n  -webkit-backface-visibility: visible !important;\n  backface-visibility: visible !important;\n  animation-name: flipOutY;\n}\n@keyframes lightSpeedIn {\n  from {\n    transform: translate3d(100%, 0, 0) skewX(-30deg);\n    opacity: 0;\n  }\n  60% {\n    transform: skewX(20deg);\n    opacity: 1;\n  }\n  80% {\n    transform: skewX(-5deg);\n    opacity: 1;\n  }\n  to {\n    transform: none;\n    opacity: 1;\n  }\n}\n.lightSpeedIn {\n  animation-name: lightSpeedIn;\n  animation-timing-function: ease-out;\n}\n@keyframes lightSpeedOut {\n  from {\n    opacity: 1;\n  }\n  to {\n    transform: translate3d(100%, 0, 0) skewX(30deg);\n    opacity: 0;\n  }\n}\n.lightSpeedOut {\n  animation-name: lightSpeedOut;\n  animation-timing-function: ease-in;\n}\n@keyframes rotateIn {\n  from {\n    transform-origin: center;\n    transform: rotate3d(0, 0, 1, -200deg);\n    opacity: 0;\n  }\n  to {\n    transform-origin: center;\n    transform: none;\n    opacity: 1;\n  }\n}\n.rotateIn {\n  animation-name: rotateIn;\n}\n@keyframes rotateInDownLeft {\n  from {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0;\n  }\n  to {\n    transform-origin: left bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n.rotateInDownLeft {\n  animation-name: rotateInDownLeft;\n}\n@keyframes rotateInDownRight {\n  from {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0;\n  }\n  to {\n    transform-origin: right bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n.rotateInDownRight {\n  animation-name: rotateInDownRight;\n}\n@keyframes rotateInUpLeft {\n  from {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0;\n  }\n  to {\n    transform-origin: left bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n.rotateInUpLeft {\n  animation-name: rotateInUpLeft;\n}\n@keyframes rotateInUpRight {\n  from {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, -90deg);\n    opacity: 0;\n  }\n  to {\n    transform-origin: right bottom;\n    transform: none;\n    opacity: 1;\n  }\n}\n.rotateInUpRight {\n  animation-name: rotateInUpRight;\n}\n@keyframes rotateOut {\n  from {\n    transform-origin: center;\n    opacity: 1;\n  }\n  to {\n    transform-origin: center;\n    transform: rotate3d(0, 0, 1, 200deg);\n    opacity: 0;\n  }\n}\n.rotateOut {\n  animation-name: rotateOut;\n}\n@keyframes rotateOutDownLeft {\n  from {\n    transform-origin: left bottom;\n    opacity: 1;\n  }\n  to {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0;\n  }\n}\n.rotateOutDownLeft {\n  animation-name: rotateOutDownLeft;\n}\n@keyframes rotateOutDownRight {\n  from {\n    transform-origin: right bottom;\n    opacity: 1;\n  }\n  to {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0;\n  }\n}\n.rotateOutDownRight {\n  animation-name: rotateOutDownRight;\n}\n@keyframes rotateOutUpLeft {\n  from {\n    transform-origin: left bottom;\n    opacity: 1;\n  }\n  to {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0;\n  }\n}\n.rotateOutUpLeft {\n  animation-name: rotateOutUpLeft;\n}\n@keyframes rotateOutUpRight {\n  from {\n    transform-origin: right bottom;\n    opacity: 1;\n  }\n  to {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, 90deg);\n    opacity: 0;\n  }\n}\n.rotateOutUpRight {\n  animation-name: rotateOutUpRight;\n}\n@keyframes hinge {\n  0% {\n    transform-origin: top left;\n    animation-timing-function: ease-in-out;\n  }\n  20%,\n  60% {\n    transform: rotate3d(0, 0, 1, 80deg);\n    transform-origin: top left;\n    animation-timing-function: ease-in-out;\n  }\n  40%,\n  80% {\n    transform: rotate3d(0, 0, 1, 60deg);\n    transform-origin: top left;\n    animation-timing-function: ease-in-out;\n    opacity: 1;\n  }\n  to {\n    transform: translate3d(0, 700px, 0);\n    opacity: 0;\n  }\n}\n.hinge {\n  animation-name: hinge;\n}\n@keyframes jackInTheBox {\n  from {\n    opacity: 0;\n    transform: scale(0.1) rotate(30deg);\n    transform-origin: center bottom;\n  }\n  50% {\n    transform: rotate(-10deg);\n  }\n  70% {\n    transform: rotate(3deg);\n  }\n  to {\n    opacity: 1;\n    transform: scale(1);\n  }\n}\n.jackInTheBox {\n  animation-name: jackInTheBox;\n}\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n@keyframes rollIn {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg);\n  }\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n.rollIn {\n  animation-name: rollIn;\n}\n/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */\n@keyframes rollOut {\n  from {\n    opacity: 1;\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0) rotate3d(0, 0, 1, 120deg);\n  }\n}\n.rollOut {\n  animation-name: rollOut;\n}\n@keyframes zoomIn {\n  from {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale3d(0.3, 0.3, 0.3);\n  }\n  50% {\n    opacity: 1;\n  }\n}\n.zoomIn {\n  animation-name: zoomIn;\n}\n@keyframes zoomInDown {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n.zoomInDown {\n  animation-name: zoomInDown;\n}\n@keyframes zoomInLeft {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n.zoomInLeft {\n  animation-name: zoomInLeft;\n}\n@keyframes zoomInRight {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n.zoomInRight {\n  animation-name: zoomInRight;\n}\n@keyframes zoomInUp {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 1000px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n.zoomInUp {\n  animation-name: zoomInUp;\n}\n@keyframes zoomOut {\n  from {\n    opacity: 1;\n  }\n  50% {\n    opacity: 0;\n    transform: translate(-50%, -50%) scale3d(0.3, 0.3, 0.3);\n  }\n  to {\n    opacity: 0;\n  }\n}\n.zoomOut {\n  animation-name: zoomOut;\n}\n@keyframes zoomOutDown {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n  to {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 2000px, 0);\n    transform-origin: center bottom;\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n.zoomOutDown {\n  animation-name: zoomOutDown;\n}\n@keyframes zoomOutLeft {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(42px, 0, 0);\n  }\n  to {\n    opacity: 0;\n    transform: scale(0.1) translate3d(-2000px, 0, 0);\n    transform-origin: left center;\n  }\n}\n.zoomOutLeft {\n  animation-name: zoomOutLeft;\n}\n@keyframes zoomOutRight {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(-42px, 0, 0);\n  }\n  to {\n    opacity: 0;\n    transform: scale(0.1) translate3d(2000px, 0, 0);\n    transform-origin: right center;\n  }\n}\n.zoomOutRight {\n  animation-name: zoomOutRight;\n}\n@keyframes zoomOutUp {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n  }\n  to {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0);\n    transform-origin: center bottom;\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n  }\n}\n.zoomOutUp {\n  animation-name: zoomOutUp;\n}\n@keyframes slideInDown {\n  from {\n    transform: translate3d(0, -100%, 0);\n    visibility: visible;\n  }\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n.slideInDown {\n  animation-name: slideInDown;\n}\n@keyframes slideInLeft {\n  from {\n    transform: translate3d(-100%, 0, 0);\n    visibility: visible;\n  }\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n.slideInLeft {\n  animation-name: slideInLeft;\n}\n@keyframes slideInRight {\n  from {\n    transform: translate3d(100%, 0, 0);\n    visibility: visible;\n  }\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n.slideInRight {\n  animation-name: slideInRight;\n}\n@keyframes slideInUp {\n  from {\n    transform: translate3d(0, 100%, 0);\n    visibility: visible;\n  }\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n.slideInUp {\n  animation-name: slideInUp;\n}\n@keyframes slideOutDown {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n  to {\n    visibility: hidden;\n    transform: translate3d(0, 100%, 0);\n  }\n}\n.slideOutDown {\n  animation-name: slideOutDown;\n}\n@keyframes slideOutLeft {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n  to {\n    visibility: hidden;\n    transform: translate3d(-100%, 0, 0);\n  }\n}\n.slideOutLeft {\n  animation-name: slideOutLeft;\n}\n@keyframes slideOutRight {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n  to {\n    visibility: hidden;\n    transform: translate3d(100%, 0, 0);\n  }\n}\n.slideOutRight {\n  animation-name: slideOutRight;\n}\n@keyframes slideOutUp {\n  from {\n    transform: translate3d(0, 0, 0);\n  }\n  to {\n    visibility: hidden;\n    transform: translate3d(0, -100%, 0);\n  }\n}\n.slideOutUp {\n  animation-name: slideOutUp;\n}\n", ""]);
 
 // exports
 
@@ -11938,24 +11944,91 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "vuk-alert" }, [
-    _c("div", {
-      staticClass: "vuk-bg",
-      style: { "z-index": _vm.alert.bgIndex }
-    }),
-    _vm._v(" "),
-    _c("div", { staticClass: "vuk-log" }, [
-      _c("h4", { staticClass: "log-title", attrs: { m: "" } }, [
-        _vm._v(_vm._s(_vm.alert.title))
-      ]),
+  return _c(
+    "div",
+    { staticClass: "vuk-alert" },
+    [
+      _c(
+        "transition",
+        {
+          attrs: {
+            name: "custom-classes-transition",
+            "enter-active-class": "ani2 fadeIn",
+            "leave-active-class": "animated fadeOut"
+          }
+        },
+        [
+          _c("div", {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.alert.toggle,
+                expression: "alert.toggle"
+              }
+            ],
+            staticClass: "vuk-bg",
+            style: { "z-index": _vm.alert.bgIndex },
+            on: {
+              click: function($event) {
+                _vm.alertHide()
+              }
+            }
+          })
+        ]
+      ),
       _vm._v(" "),
-      _c("p", { staticClass: "log-info", attrs: { m: "" } }, [
-        _vm._v(_vm._s(_vm.alert.info))
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn-log-sure" }, [_vm._v("确定")])
-    ])
-  ])
+      _c(
+        "transition",
+        {
+          attrs: {
+            name: "custom-classes-transition",
+            "enter-active-class": "animated zoomIn",
+            "leave-active-class": "animated zoomOut"
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.alert.toggle,
+                  expression: "alert.toggle"
+                }
+              ],
+              staticClass: "vuk-log"
+            },
+            [
+              _c("h4", { staticClass: "log-title", attrs: { m: "" } }, [
+                _vm._v(_vm._s(_vm.alert.title))
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "log-info", attrs: { m: "" } }, [
+                _vm._v(_vm._s(_vm.alert.info))
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn-log-sure",
+                  on: {
+                    click: function($event) {
+                      _vm.alertHide()
+                    }
+                  }
+                },
+                [_vm._v("确定")]
+              )
+            ]
+          )
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -12008,13 +12081,13 @@ var content = __webpack_require__(341);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(135)("1ff0781f", content, false);
+var update = __webpack_require__(135)("6c4e0c5f", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-241baa36\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
-     var newContent = require("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-241baa36\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
+   module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-241baa36\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
+     var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-241baa36\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
