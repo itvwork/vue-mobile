@@ -1,19 +1,21 @@
 
 <template lang="html">
       <section m class="app-main-wrap">
+        <router-link :to="{name:'user'}">user</router-link>
+        <router-link :to="{name:'login'}">home</router-link>
             <router-view></router-view>
-            <vuk-alert></vuk-alert>
+          
       </section>
 </template>
 
 <script>
-import VukAlert from "./components/VukAlert/index.vue";
+
 export default {
   data() {
     return {};
   },
   components: {
-    VukAlert
+
   }
 };
 </script>

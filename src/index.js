@@ -13,10 +13,19 @@ Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.config.devtools = true;
 const router = new VueRouter({
-    //mode: 'history',
+    mode: 'history',
     routes
 })
 
+
+// router.beforeEach(function (to, from, next) {
+//   if (to.path === '/user') {
+//     next({name:'login'})
+//   } else {
+//     next()
+//   }
+ 
+// })
 var store = new Vuex.Store(stateManage);
 
 

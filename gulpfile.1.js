@@ -15,11 +15,6 @@ var connect = require('gulp-connect'); //本地服务
 var rest = require('connect-rest');
 var uglify = require('gulp-uglify');
 
-
-var browserSync = require('browser-sync');
-var webreload = browserSync.reload;
-var nodemon = require('gulp-nodemon');
-
 var src = {
     html: './src/index.html',
     less: './src/style/index.less',
@@ -41,8 +36,7 @@ function clean(done) {
 
 
 
-var devCompiler = devCompiler = webpack(config);
-
+var devCompiler=devCompiler=webpack(config);
 function devWebpack(done) {
     devCompiler.run(function (err, stats) {
         if (err) {
@@ -56,32 +50,39 @@ function devWebpack(done) {
         }));
         done();
     });
-
+  
 }
 
-function node(done) {
-    nodemon({
-        script: 'app.js',
-        ext: 'js html',
-        env: {
-            'NODE_ENV': 'development'
+// function bulidWebpack() {
+//     webpack(config([
+//         new webpack.optimize.UglifyJsPlugin({
+//             compress: {
+//                 warnings: false
+//             }
+//         }),
+//         new webpack.DefinePlugin({
+//             'process.env': {
+//                 NODE_ENV: 'production',
+               
+//             }
+//         }),
+//         new webpack.optimize.DedupePlugin(), //去重
+//         new webpack.LoaderOptionsPlugin({
+//             options: {
+//                 postcss: function () {
+//                     return [
+//                         require("autoprefixer")({
+//                             browsers: ['ie>=8', '>1% in CN']
+//                         })
+//                     ]
+//                 }
+//             }
+//         })
+//     ]), function (err, stats) {
+//         console.log(err)
+//     })
 
-        }
-    })
-    done();
-
-}
-
-function webStart(done){
-    browserSync.init('./dist', {
-         proxy: 'http://localhost:3000',
-         browser: 'chrome',
-         notify: false,
-         port: 3001
-     });
-     done();
-}
-
+// }
 
 
 
@@ -132,7 +133,6 @@ function watch(done) {
     ], gulp.series(devWebpack, reload));
     gulp.watch('./src/style/**/*.less', css);
     gulp.watch(src.img, img);
-    gulp.watch('./dist/**/*',webreload)
     done();
 
 }
@@ -170,4 +170,4 @@ function reload() {
     return gulp.src('dist/**/*')
         .pipe(connect.reload()); //自动刷新
 }
-gulp.task("default", gulp.series(clean, devWebpack, html, css, img,node,webStart,watch));
+gulp.task("default", gulp.series(clean, devWebpack, html, css, img, connectServer, watch));

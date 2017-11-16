@@ -1,8 +1,9 @@
+<style lang="less">
+@import "./style.less";
+</style>
 <template lang="html">
     <div  m class="vue-text" >
         <input :type="type" :placeholder="placeholder"  />
-    
-    wedqwe
     </div>
 </template>
 <script>
@@ -29,7 +30,7 @@ export default {
   },
 
    components: {
-
+        
   },
 };
 </script>

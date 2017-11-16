@@ -1,7 +1,7 @@
 const state = {
     title: '警告',
     info: '警告的内容',
-    toggle: false,
+    toggle: true,
     bgIndex: 99
 }
 

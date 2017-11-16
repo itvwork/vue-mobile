@@ -77,3 +77,32 @@
     display: @a;
     display: -webkit-@a;
 }
+
+.topline( @b: 0px) {
+    content: '';
+    position: absolute;
+    left: @b;
+    top: 0;
+    right: 0;
+    height: 1px;
+    border-top: 1px solid @line;
+    color: @line;
+    transform-origin: 0 100%;
+    transform: scaleY(0.5);
+    font-size: 0px;
+}
+
+.bottomline( @b: 0px) {
+    content: ' ';
+    position: absolute;
+    left: @b;
+    bottom: 0;
+    right: 0;
+    height: 1px;
+    border-top: 1px solid @line;
+    color: @line;
+    transform-origin: 0 100%;
+    transform: scaleY(0.5);
+    font-size: 0px;
+}
+

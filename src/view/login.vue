@@ -1,20 +1,35 @@
 <template lang="html">
+
     <section  m class="wrap-main">
-        
+
    <vuk-text></vuk-text>
-    
+   <vuk-alert ref="alert"></vuk-alert> 
+    <button @click="show()">alert</button>
     </section>
+
 </template>
 <script>
-import VuKText from '../components/VukText'
+import VukText from "../components/VukText";
+import VukAlert from "../components/VukAlert";
 export default {
-   beforeCreate(){
-       document.getElementById('pop').innerHTML='<vue-text></vue-text>'
-      
-   },
-
-   components: {
-    VuKTextt
+  components: {
+    VukText,VukAlert
   },
+   watch:{
+    '$route': function(to, from) {
+        console.log('---------login');
+    }
+  },
+  mounted () {
+      window.onpopstate=function(e){
+        e.preventDefault();
+        alert('back');
+      }
+  },
+  methods: {
+    show(){
+      this.$refs.alert.toggle=true;
+    }  
+  }
 };
 </script>
