@@ -1,10 +1,10 @@
 <template lang="html">
 
     <section  m class="wrap-main">
-
    <vuk-text></vuk-text>
-   <vuk-alert ref="alert"></vuk-alert> 
+   <vuk-alert ref="alert" title="login" name="/login"></vuk-alert>
     <button @click="show()">alert</button>
+
     </section>
 
 </template>
@@ -23,13 +23,13 @@ export default {
   mounted () {
       window.onpopstate=function(e){
         e.preventDefault();
-        alert('back');
+
       }
   },
   methods: {
     show(){
-      this.$refs.alert.toggle=true;
-    }  
+      this.$refs.alert.toggle = true;
+    }
   }
 };
 </script>

@@ -2,7 +2,7 @@
 @import "./style.less";
 </style>
 <template lang="html" >
-   <div class="vuk-alert" v-append>
+   <div class="vuk-alert" :name="name" v-append >
      <transition name="custom-classes-transition" enter-active-class="ani2 fadeIn" leave-active-class="animated fadeOut">
       <div class="vuk-bg"  @click="toogle=false"  v-show="toggle"></div>
   </transition>
@@ -25,24 +25,22 @@ export default {
     info: {
       type: String,
       default: "警告内容"
+    },
+    name:{
+      type:String,
+      default:''
     }
+
   },
   data() {
     return {
-      toggle: false
+      toggle: false,
+      shows:false
     };
   },
   created() {
-    // let self = this;
-    // let div = document.createElement("div");
-    // div.className = "vuk-alertx";
-    // let btn = document.createElement("button");
-    // btn.innerHTML = "确定";
-    // div.appendChild(btn);
-    // btn.onclick=function(){
-    //   self.show();
-    // };
-    // document.body.appendChild(div);
+
+
   },
   methods: {
     show() {
@@ -53,31 +51,23 @@ export default {
     window.onpopstate=(e)=>{
       this.toggle=false;
     }
-  
+
   },
   directives: {
     append: {
       // 指令的定义
       inserted: function(el) {
         let nodes = document.body.childNodes;
-        let arr=[];  
+        let arr=[];
          for(let i=0,len=nodes.length;i<len;i++){
-           if(nodes[i].nodeType==1&&nodes[i].className=="div-alert-none"){
-              arr.push(nodes[i]);
+           if(nodes[i].nodeType==1&&nodes[i].name==window.location.pathname){
+               arr.push(nodes[i]);
            }
          }
-
-       
          for(let i in arr){
            document.body.removeChild(arr[i]);
-           console.log(1);
          }
-
-        let box = document.createElement("div");
-        box.className = "div-alert-none";
-        box.appendChild(el);
-        document.body.appendChild(box);
-
+        document.body.appendChild(el);
         return "";
       }
     }

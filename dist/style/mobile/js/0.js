@@ -346,25 +346,20 @@ exports.default = {
     info: {
       type: String,
       default: "警告内容"
+    },
+    name: {
+      type: String,
+      default: ''
     }
+
   },
   data: function data() {
     return {
-      toggle: false
+      toggle: false,
+      shows: false
     };
   },
-  created: function created() {
-    // let self = this;
-    // let div = document.createElement("div");
-    // div.className = "vuk-alertx";
-    // let btn = document.createElement("button");
-    // btn.innerHTML = "确定";
-    // div.appendChild(btn);
-    // btn.onclick=function(){
-    //   self.show();
-    // };
-    // document.body.appendChild(div);
-  },
+  created: function created() {},
 
   methods: {
     show: function show() {
@@ -386,21 +381,14 @@ exports.default = {
         var nodes = document.body.childNodes;
         var arr = [];
         for (var i = 0, len = nodes.length; i < len; i++) {
-          if (nodes[i].nodeType == 1 && nodes[i].className == "div-alert-none") {
+          if (nodes[i].nodeType == 1 && nodes[i].name == window.location.pathname) {
             arr.push(nodes[i]);
           }
         }
-
         for (var _i in arr) {
           document.body.removeChild(arr[_i]);
-          console.log(1);
         }
-
-        var box = document.createElement("div");
-        box.className = "div-alert-none";
-        box.appendChild(el);
-        document.body.appendChild(box);
-
+        document.body.appendChild(el);
         return "";
       }
     }
@@ -612,7 +600,8 @@ var render = function() {
     "div",
     {
       directives: [{ name: "append", rawName: "v-append" }],
-      staticClass: "vuk-alert"
+      staticClass: "vuk-alert",
+      attrs: { name: _vm.name }
     },
     [
       _c(
@@ -744,13 +733,13 @@ var content = __webpack_require__(353);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(349)("1ff0781f", content, false);
+var update = __webpack_require__(349)("6c4e0c5f", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-241baa36\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
-     var newContent = require("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-241baa36\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
+   module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-241baa36\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
+     var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-241baa36\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -771,13 +760,13 @@ var content = __webpack_require__(354);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(349)("5c13b638", content, false);
+var update = __webpack_require__(349)("af1d6b10", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-294766af\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
-     var newContent = require("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-294766af\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
+   module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-294766af\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
+     var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-294766af\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -816,14 +805,43 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
 
 exports.default = {
   components: {
     VukText: _VukText2.default,
     VukAlert: _index2.default
   },
+  data: function data() {
+    return {
+      list: [],
+      warn: '',
+      'user': 'warn'
+    };
+  },
+  activated: function activated() {},
+  created: function created() {
+    var self = this;
+    console.log(window.history);
+    setTimeout(function () {
+
+      self.list = [{
+        title: '111111111111'
+      }, {
+        title: '22222222'
+      }, {
+        title: '3333333333'
+      }, {
+        title: '44444444444'
+      }];
+    }, 2000);
+  },
+
   methods: {
     show: function show() {
+
+      this.user = '我没钱';
       this.$refs.alert.toggle = true;
     }
   }
@@ -845,21 +863,28 @@ var render = function() {
     [
       _c("vuk-text"),
       _vm._v(" "),
-      _c("vuk-alert", { ref: "alert" }),
+      _c("vuk-alert", {
+        ref: "alert",
+        attrs: { name: "/user", title: _vm.user }
+      }),
       _vm._v(" "),
       _c(
         "button",
         {
           on: {
             click: function($event) {
-              _vm.$refs.alert.toggle = true
+              _vm.show()
             }
           }
         },
         [_vm._v("alert")]
-      )
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.list, function(item, index) {
+        return _c("button", [_vm._v(_vm._s(item.title))])
+      })
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []

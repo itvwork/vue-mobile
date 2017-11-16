@@ -235,8 +235,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!./index.less", function() {
-			var newContent = require("!!../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!./index.less");
+		module.hot.accept("!!../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!./index.less", function() {
+			var newContent = require("!!../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!./index.less");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -11896,6 +11896,7 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
 
 
 exports.default = {
@@ -12766,7 +12767,7 @@ var render = function() {
       _vm._v(" "),
       _c("router-link", { attrs: { to: { name: "login" } } }, [_vm._v("home")]),
       _vm._v(" "),
-      _c("router-view")
+      _c("keep-alive", [_c("router-view")], 1)
     ],
     1
   )
