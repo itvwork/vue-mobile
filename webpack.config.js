@@ -16,7 +16,7 @@ module.exports = {
     },
     entry: {
         index: './src/index.js',
-        vendor: ['babel-polyfill']
+        vendor: '/src/vender/index'
     },
     output: {
         filename: '[name].js',

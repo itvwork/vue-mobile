@@ -6,7 +6,6 @@
         <button @click="show()">alert</button>
         <button v-for="(item,index) in list" >{{item.title}}</button>
     </section>
-
 </template>
 <script>
 import VukText from "../components/VukText";
@@ -27,6 +26,8 @@ export default {
 
   },
   created(){
+    
+  
     let self=this;
     console.log(window.history);
     setTimeout(function(){
@@ -49,7 +50,7 @@ export default {
   },
   methods: {
     show() {
-
+      tips.show();
       this.user='我没钱';
       this.$refs.alert.toggle = true;
     }

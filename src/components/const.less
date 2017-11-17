@@ -5,6 +5,13 @@
 @bg: #fafbfd;
 @warn: #FF9900;
 @pass: #3CC51F;
+@word: #333;
+@color1: #fafafd;
+@color2: #d6d8df;
+@color3: #fc9a98;
+@color4: #7da6e2;
+@color5: #57d2c5;
+@color1: #0de2ac;
 .border-radius(@a, @b) when(@a=0) {
     border-radius: @b;
     -webkit-border-radius: @b;
@@ -106,3 +113,29 @@
     font-size: 0px;
 }
 
+.display(@a: box) {
+    display: @a;
+    display: -webkit-@a;
+    display: flex;
+}
+
+.flex(@a: 1) {
+    flex: @a;
+}
+
+.selnone(@a: none) {
+    -webkit-user-select: @a;
+    -moz-user-select: @a;
+    -ms-user-select: @a;
+    user-select: @a;
+}
+
+.tranxy(@a: -50%, @b: -50%) {
+    transform: translate(@a, @b);
+}
+
+.p50(@a: 50%, @b: 50%) {
+    position: absolute;
+    left: @a;
+    top: @b;
+}

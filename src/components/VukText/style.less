@@ -1,15 +1,42 @@
 @import "../const.less";
-.vue-text {
+.vuk-text {
     position: relative;
-    height: 10mm;
+    height: 11mm;
     box-sizing: border-box;
-    margin: 0px; overflow:hidden;
+    margin: 0px;
+    line-height: 11mm;
+    overflow: hidden;
     border-spacing: 0px;
+    .display;
     &:after {
-        .bottomline(3mm);
+        .bottomline;
     }
-    input{
-        height: 100%; width: 100%;
+    .vuk-text-title {
+        padding-left: 5mm;
+    }
+    .vuk-text-input {
+        .flex;
+        position: relative;
+    }
+    input {
+        height: 100%;
+        width: 100%; 
+        padding-right: 8mm; box-sizing: border-box;
+    }
+    .icon {
+        display: block;
+        .tranxy;
+        position: absolute;
+        right: 0px;
+        top: 50%;
+        font-size: 5mm;
+    }
+    .err:before {
+        content: '\e75e';
+        color: @warn;
+    }
+    .pass:before {
+        color: @pass;
+        content: '\e75f';
     }
 }
-

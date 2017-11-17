@@ -7,8 +7,6 @@ import './style/index.less';
 import stateManage from './modules/index';
 
 
-
-
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.config.devtools = true;

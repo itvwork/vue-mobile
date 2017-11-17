@@ -73,7 +73,7 @@ function node(done) {
 }
 
 function webStart(done){
-    browserSync.init('./dist', {
+    browserSync.init('./dist/**/*', {
          proxy: 'http://localhost:3000',
          browser: 'chrome',
          notify: false,

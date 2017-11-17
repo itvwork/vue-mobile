@@ -1,22 +1,21 @@
 
 <template lang="html">
       <section m class="app-main-wrap">
-        <router-link :to="{name:'user'}">user</router-link>
-        <router-link :to="{name:'login'}">home</router-link>
         <keep-alive>
             <router-view></router-view>
         </keep-alive>
+        <vuk-tips></vuk-tips>
       </section>
 </template>
 
 <script>
-
+import VukTips from "./components/VukTips";
 export default {
   data() {
     return {};
   },
   components: {
-
+    VukTips
   }
 };
 </script>
