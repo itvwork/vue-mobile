@@ -64,9 +64,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _iscroll = __webpack_require__(373);
+var _iscrollProbe = __webpack_require__(373);
 
-var _iscroll2 = _interopRequireDefault(_iscroll);
+var _iscrollProbe2 = _interopRequireDefault(_iscrollProbe);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -95,16 +95,20 @@ exports.default = {
     }
   },
   mounted: function mounted() {
-    this.scroll = new _iscroll2.default("#wrapper", {
+    this.scroll = new _iscrollProbe2.default("#wrapper", {
       zoom: true,
       scrollX: true,
       scrollY: true,
       mouseWheel: true,
       wheelAction: "zoom",
-      bounce: true
-    });
+      bounce: true,
+      disableTouch: true,
+      click: true
 
-    this.scroll.refresh();
+    });
+    console.log(this.scroll);
+
+    this.scroll.on('scroll', function () {});
   },
   updated: function updated() {
     this.scroll.refresh();
@@ -720,6 +724,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 		this.options.invertWheelDirection = this.options.invertWheelDirection ? -1 : 1;
 
+		if (this.options.probeType == 3) {
+			this.options.useTransition = false;
+		}
+
 		// INSERT POINT: NORMALIZATION
 
 		// Some defaults
@@ -931,13 +939,19 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			this._translate(newX, newY);
 
 			/* REPLACE START: _move */
-
 			if (timestamp - this.startTime > 300) {
 				this.startTime = timestamp;
 				this.startX = this.x;
 				this.startY = this.y;
+
+				if (this.options.probeType == 1) {
+					this._execEvent('scroll');
+				}
 			}
 
+			if (this.options.probeType > 1) {
+				this._execEvent('scroll');
+			}
 			/* REPLACE END: _move */
 		},
 
@@ -1558,6 +1572,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 			this.scrollTo(newX, newY, 0);
 
+			if (this.options.probeType > 1) {
+				this._execEvent('scroll');
+			}
+
 			// INSERT POINT: _wheel
 		},
 
@@ -1958,11 +1976,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				if (that.isAnimating) {
 					rAF(step);
 				}
+
+				if (that.options.probeType == 3) {
+					that._execEvent('scroll');
+				}
 			}
 
 			this.isAnimating = true;
 			step();
 		},
+
 		handleEvent: function handleEvent(e) {
 			switch (e.type) {
 				case 'touchstart':
@@ -2217,6 +2240,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			newY = this.y + deltaY;
 
 			this._pos(newX, newY);
+
+			if (this.scroller.options.probeType == 1 && timestamp - this.startTime > 300) {
+				this.startTime = timestamp;
+				this.scroller._execEvent('scroll');
+			} else if (this.scroller.options.probeType > 1) {
+				this.scroller._execEvent('scroll');
+			}
 
 			// INSERT POINT: indicator._move
 
@@ -2893,13 +2923,13 @@ var content = __webpack_require__(374);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(136)("e4ef3aea", content, false);
+var update = __webpack_require__(136)("4c34126a", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-40b7434f\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
-     var newContent = require("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-40b7434f\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
+   module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-40b7434f\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
+     var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-40b7434f\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -2920,13 +2950,13 @@ var content = __webpack_require__(377);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(136)("72a21688", content, false);
+var update = __webpack_require__(136)("130c88fc", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b851bc22\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
-     var newContent = require("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b851bc22\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
+   module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b851bc22\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
+     var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b851bc22\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

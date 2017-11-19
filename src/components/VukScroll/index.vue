@@ -59,10 +59,10 @@
 </div>
 
         <!-- <slot></slot> -->
-  
+
 </template>
 <script>
-import IScroll from "../../vender/iscroll.js";
+import IScroll from "../../vender/iscroll-probe.js";
 export default {
   props: {
     title: {
@@ -94,10 +94,16 @@ export default {
       scrollY: true,
       mouseWheel: true,
       wheelAction: "zoom",
-      bounce: true
-    });
+      bounce: true,
+      disableTouch:true,
+      click : true,
 
-    this.scroll.refresh();
+    });
+    console.log(  this.scroll);
+
+    this.scroll.on('scroll',function(){
+
+    });
   },
   updated() {
     this.scroll.refresh();
