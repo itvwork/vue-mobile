@@ -235,8 +235,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!./index.less", function() {
-			var newContent = require("!!../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!./index.less");
+		module.hot.accept("!!../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!./index.less", function() {
+			var newContent = require("!!../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!./index.less");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -12030,6 +12030,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _vue2.default.use(_vueRouter2.default);
 _vue2.default.use(_vuex2.default);
+
+_vue2.default.directive('tap', {
+    bind: function bind(el, binding) {
+        var startTx, startTy, endTx, endTy;
+        el.addEventListener("touchstart", function (e) {
+            var touch = e.touches[0];
+            startTx = touch.clientX;
+            startTy = touch.clientY;
+        }, false);
+        el.addEventListener("touchend", function (e) {
+            var touch = e.changedTouches[0];
+            endTx = touch.clientX;
+            endTy = touch.clientY;
+            if (Math.abs(startTx - endTx) < 6 && Math.abs(startTy - endTy) < 6) {
+                var method = binding.value.method;
+                var params = binding.value.params;
+                method(params);
+            }
+        }, false);
+    }
+});
 _vue2.default.config.devtools = true;
 var router = new _vueRouter2.default({
     mode: 'history',
@@ -12996,13 +13017,13 @@ var content = __webpack_require__(342);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(136)("4b69bd80", content, false);
+var update = __webpack_require__(136)("e424e600", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-10e1a2fa\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
-     var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-10e1a2fa\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
+   module.hot.accept("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-10e1a2fa\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
+     var newContent = require("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-10e1a2fa\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

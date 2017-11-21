@@ -9,6 +9,29 @@ import stateManage from './modules/index';
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
+
+Vue.directive('tap', {
+    bind: function (el, binding) {
+        var startTx, startTy, endTx, endTy;
+        el.addEventListener("touchstart", function (e) {
+            var touch = e.touches[0];
+            startTx = touch.clientX;
+            startTy = touch.clientY;
+           
+        }, false);
+        el.addEventListener("touchend", function (e) {
+            var touch = e.changedTouches[0];
+            endTx = touch.clientX;
+            endTy = touch.clientY;
+            if (Math.abs(startTx - endTx) < 6 && Math.abs(startTy - endTy) < 6) {
+                var method = binding.value.method;
+                var params = binding.value.params;
+                method(params);
+            }
+        }, false);
+
+    }
+})
 Vue.config.devtools = true;
 const router = new VueRouter({
     mode: 'history',
@@ -22,7 +45,7 @@ const router = new VueRouter({
 //   } else {
 //     next()
 //   }
- 
+
 // })
 var store = new Vuex.Store(stateManage);
 

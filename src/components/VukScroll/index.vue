@@ -1,12 +1,12 @@
 
 <template lang="html">
     <div id="wrapper" class="vuk-scroll-wrap">
-	<div id="scroller">
+	<div id="scroller" class="vuk-scroller">
     <div class="vuk-scroll-loading">loading</div>
 		<ul>
-			<li>Pretty row 1</li>
-			<li>Pretty row 2</li>
-			<li>Pretty row 3</li>
+			<li v-tap="{method:alert,params:'你是谁'}">Pretty row 1</li>
+			<li v-tap="{method:alert,params:'你是谁1'}">Pretty row 2</li>
+			<li @click="alert('click')">Pretty row 3</li>
 			<li>Pretty row 4</li>
 			<li>Pretty row 5</li>
 			<li>Pretty row 6</li>
@@ -88,22 +88,21 @@ export default {
     }
   },
   mounted: function() {
+    let self = this;
     this.scroll = new IScroll("#wrapper", {
-      zoom: true,
+      mouseWheel: false,
+      scrollbars: false,
+      freeScroll: false,
       scrollX: true,
-      scrollY: true,
-      mouseWheel: true,
-      wheelAction: "zoom",
       bounce: true,
-      disableTouch:true,
-      click : true,
-
+   
+      deceleration: 0.009,
+      probeType: 1,
+      ignoreBoundaries: true,
+      speedRatioY: 0.4
     });
-    console.log(  this.scroll);
 
-    this.scroll.on('scroll',function(){
-
-    });
+    this.scroll.on("scroll", function() {});
   },
   updated() {
     this.scroll.refresh();
@@ -116,8 +115,8 @@ export default {
     };
   },
   methods: {
-    alert() {
-      alert("错");
+    alert(val) {
+      console.log(val);
     }
   },
   components: {}

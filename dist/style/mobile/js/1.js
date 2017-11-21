@@ -95,20 +95,21 @@ exports.default = {
     }
   },
   mounted: function mounted() {
+    var self = this;
     this.scroll = new _iscrollProbe2.default("#wrapper", {
-      zoom: true,
+      mouseWheel: false,
+      scrollbars: false,
+      freeScroll: false,
       scrollX: true,
-      scrollY: true,
-      mouseWheel: true,
-      wheelAction: "zoom",
       bounce: true,
-      disableTouch: true,
-      click: true
 
+      deceleration: 0.009,
+      probeType: 1,
+      ignoreBoundaries: true,
+      speedRatioY: 0.4
     });
-    console.log(this.scroll);
 
-    this.scroll.on('scroll', function () {});
+    this.scroll.on("scroll", function () {});
   },
   updated: function updated() {
     this.scroll.refresh();
@@ -122,19 +123,9 @@ exports.default = {
   },
 
   methods: {
-    alert: function (_alert) {
-      function alert() {
-        return _alert.apply(this, arguments);
-      }
-
-      alert.toString = function () {
-        return _alert.toString();
-      };
-
-      return alert;
-    }(function () {
-      alert("错");
-    })
+    alert: function alert(val) {
+      console.log(val);
+    }
   },
   components: {}
 }; //
@@ -308,9 +299,7 @@ exports.default = {
     VukScroll: _VukScroll2.default
   },
   watch: {
-    '$route': function $route(to, from) {
-      console.log('---------home-');
-    }
+    '$route': function $route(to, from) {}
   },
   created: function created() {},
 
@@ -2516,7 +2505,7 @@ exports = module.exports = __webpack_require__(92)(undefined);
 
 
 // module
-exports.push([module.i, "\n.vuk-scroll-wrap {\n  position: absolute;\n  z-index: 1;\n  top: 50px;\n  bottom: 50px;\n  left: 50px;\n  right: 50px;\n  background: #ccc;\n  overflow: hidden;\n}\n#scroller {\n  position: absolute;\n  z-index: 1;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n  width: 100%;\n  -webkit-transform: translateZ(0);\n  -moz-transform: translateZ(0);\n  -ms-transform: translateZ(0);\n  -o-transform: translateZ(0);\n  transform: translateZ(0);\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-text-size-adjust: none;\n  -moz-text-size-adjust: none;\n  -ms-text-size-adjust: none;\n  -o-text-size-adjust: none;\n  text-size-adjust: none;\n}\n#scroller ul {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n  width: 100%;\n  text-align: left;\n}\n#scroller li {\n  padding: 0 10px;\n  height: 40px;\n  line-height: 40px;\n  border-bottom: 1px solid #ccc;\n  border-top: 1px solid #fff;\n  background-color: #fafafa;\n  font-size: 14px;\n}\n.vuk-scroll-loading {\n  position: absolute;\n  top: -10mm;\n  width: 100%;\n  text-align: center;\n}\n", ""]);
+exports.push([module.i, "\n.vuk-scroll-wrap {\n  position: absolute;\n  z-index: 1;\n  top: 11mm;\n  bottom: 50px;\n  left: 0px;\n  right: 0px;\n  background: #ccc;\n  overflow: hidden;\n}\n.vuk-scroller {\n  position: absolute;\n  z-index: 1;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n  width: 100%;\n  -webkit-transform: translateZ(0);\n  -moz-transform: translateZ(0);\n  -ms-transform: translateZ(0);\n  -o-transform: translateZ(0);\n  transform: translateZ(0);\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-text-size-adjust: none;\n  -moz-text-size-adjust: none;\n  -ms-text-size-adjust: none;\n  -o-text-size-adjust: none;\n  text-size-adjust: none;\n}\n#scroller ul {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n  width: 100%;\n  text-align: left;\n}\n#scroller li {\n  padding: 0 10px;\n  height: 40px;\n  line-height: 40px;\n  border-bottom: 1px solid #ccc;\n  border-top: 1px solid #fff;\n  background-color: #fafafa;\n  font-size: 14px;\n}\n.vuk-scroll-loading {\n  position: absolute;\n  top: -10mm;\n  width: 100%;\n  text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -2662,126 +2651,155 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "vuk-scroll-wrap", attrs: { id: "wrapper" } },
-      [
-        _c("div", { attrs: { id: "scroller" } }, [
-          _c("div", { staticClass: "vuk-scroll-loading" }, [_vm._v("loading")]),
+  return _c(
+    "div",
+    { staticClass: "vuk-scroll-wrap", attrs: { id: "wrapper" } },
+    [
+      _c("div", { staticClass: "vuk-scroller", attrs: { id: "scroller" } }, [
+        _c("div", { staticClass: "vuk-scroll-loading" }, [_vm._v("loading")]),
+        _vm._v(" "),
+        _c("ul", [
+          _c(
+            "li",
+            {
+              directives: [
+                {
+                  name: "tap",
+                  rawName: "v-tap",
+                  value: { method: _vm.alert, params: "你是谁" },
+                  expression: "{method:alert,params:'你是谁'}"
+                }
+              ]
+            },
+            [_vm._v("Pretty row 1")]
+          ),
           _vm._v(" "),
-          _c("ul", [
-            _c("li", [_vm._v("Pretty row 1")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 2")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 3")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 4")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 5")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 6")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 7")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 8")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 9")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 10")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 11")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 12")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 13")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 14")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 15")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 16")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 17")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 18")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 19")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 20")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 21")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 22")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 23")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 24")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 25")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 26")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 27")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 28")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 29")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 30")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 31")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 32")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 33")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 34")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 35")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 36")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 37")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 38")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 39")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 40")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 41")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 42")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 43")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 44")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 45")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 46")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 47")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 48")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 49")]),
-            _vm._v(" "),
-            _c("li", [_vm._v("Pretty row 50")])
-          ])
+          _c(
+            "li",
+            {
+              directives: [
+                {
+                  name: "tap",
+                  rawName: "v-tap",
+                  value: { method: _vm.alert, params: "你是谁1" },
+                  expression: "{method:alert,params:'你是谁1'}"
+                }
+              ]
+            },
+            [_vm._v("Pretty row 2")]
+          ),
+          _vm._v(" "),
+          _c(
+            "li",
+            {
+              on: {
+                click: function($event) {
+                  _vm.alert("click")
+                }
+              }
+            },
+            [_vm._v("Pretty row 3")]
+          ),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 4")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 5")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 6")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 7")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 8")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 9")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 10")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 11")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 12")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 13")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 14")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 15")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 16")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 17")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 18")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 19")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 20")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 21")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 22")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 23")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 24")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 25")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 26")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 27")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 28")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 29")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 30")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 31")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 32")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 33")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 34")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 35")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 36")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 37")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 38")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 39")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 40")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 41")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 42")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 43")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 44")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 45")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 46")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 47")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 48")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 49")]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Pretty row 50")])
         ])
-      ]
-    )
-  }
-]
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
@@ -2923,13 +2941,13 @@ var content = __webpack_require__(374);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(136)("4c34126a", content, false);
+var update = __webpack_require__(136)("e4ef3aea", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-40b7434f\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
-     var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-40b7434f\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
+   module.hot.accept("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-40b7434f\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
+     var newContent = require("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-40b7434f\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -2950,13 +2968,13 @@ var content = __webpack_require__(377);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(136)("130c88fc", content, false);
+var update = __webpack_require__(136)("72a21688", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b851bc22\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
-     var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b851bc22\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
+   module.hot.accept("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b851bc22\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
+     var newContent = require("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b851bc22\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

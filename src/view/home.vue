@@ -46,7 +46,7 @@ export default {
   },
   watch:{
     '$route': function(to, from) {
-        console.log('---------home-');
+      
     }
   },
   created() {
