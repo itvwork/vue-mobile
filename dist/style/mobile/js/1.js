@@ -104,10 +104,19 @@ exports.default = {
       bounce: true,
 
       deceleration: 0.009,
-      probeType: 1,
+      probeType: 3,
       ignoreBoundaries: true,
       speedRatioY: 0.4
     });
+
+    setTimeout(function () {
+      self.scroll.destroy();
+    }, 3000);
+
+    setTimeout(function () {
+      console.log(self.scroll);
+      self.scroll.resetPosition();
+    }, 6000);
 
     this.scroll.on("scroll", function () {});
   },
@@ -125,6 +134,10 @@ exports.default = {
   methods: {
     alert: function alert(val) {
       console.log(val);
+    },
+    end: function end() {
+
+      console.log('end');
     }
   },
   components: {}
@@ -2655,147 +2668,159 @@ var render = function() {
     "div",
     { staticClass: "vuk-scroll-wrap", attrs: { id: "wrapper" } },
     [
-      _c("div", { staticClass: "vuk-scroller", attrs: { id: "scroller" } }, [
-        _c("div", { staticClass: "vuk-scroll-loading" }, [_vm._v("loading")]),
-        _vm._v(" "),
-        _c("ul", [
-          _c(
-            "li",
-            {
-              directives: [
-                {
-                  name: "tap",
-                  rawName: "v-tap",
-                  value: { method: _vm.alert, params: "你是谁" },
-                  expression: "{method:alert,params:'你是谁'}"
+      _c(
+        "div",
+        {
+          staticClass: "vuk-scroller",
+          attrs: { id: "scroller" },
+          on: {
+            touchend: function($event) {
+              _vm.end()
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "vuk-scroll-loading" }, [_vm._v("loading")]),
+          _vm._v(" "),
+          _c("ul", [
+            _c(
+              "li",
+              {
+                directives: [
+                  {
+                    name: "tap",
+                    rawName: "v-tap",
+                    value: { method: _vm.alert, params: "你是谁" },
+                    expression: "{method:alert,params:'你是谁'}"
+                  }
+                ]
+              },
+              [_vm._v("Pretty row 1")]
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                directives: [
+                  {
+                    name: "tap",
+                    rawName: "v-tap",
+                    value: { method: _vm.alert, params: "你是谁1" },
+                    expression: "{method:alert,params:'你是谁1'}"
+                  }
+                ]
+              },
+              [_vm._v("Pretty row 2")]
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                on: {
+                  click: function($event) {
+                    _vm.alert("click")
+                  }
                 }
-              ]
-            },
-            [_vm._v("Pretty row 1")]
-          ),
-          _vm._v(" "),
-          _c(
-            "li",
-            {
-              directives: [
-                {
-                  name: "tap",
-                  rawName: "v-tap",
-                  value: { method: _vm.alert, params: "你是谁1" },
-                  expression: "{method:alert,params:'你是谁1'}"
-                }
-              ]
-            },
-            [_vm._v("Pretty row 2")]
-          ),
-          _vm._v(" "),
-          _c(
-            "li",
-            {
-              on: {
-                click: function($event) {
-                  _vm.alert("click")
-                }
-              }
-            },
-            [_vm._v("Pretty row 3")]
-          ),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 4")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 5")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 6")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 7")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 8")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 9")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 10")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 11")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 12")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 13")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 14")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 15")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 16")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 17")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 18")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 19")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 20")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 21")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 22")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 23")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 24")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 25")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 26")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 27")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 28")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 29")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 30")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 31")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 32")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 33")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 34")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 35")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 36")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 37")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 38")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 39")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 40")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 41")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 42")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 43")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 44")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 45")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 46")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 47")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 48")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 49")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("Pretty row 50")])
-        ])
-      ])
+              },
+              [_vm._v("Pretty row 3")]
+            ),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 4")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 5")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 6")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 7")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 8")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 9")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 10")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 11")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 12")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 13")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 14")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 15")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 16")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 17")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 18")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 19")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 20")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 21")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 22")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 23")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 24")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 25")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 26")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 27")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 28")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 29")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 30")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 31")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 32")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 33")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 34")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 35")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 36")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 37")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 38")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 39")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 40")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 41")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 42")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 43")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 44")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 45")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 46")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 47")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 48")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 49")]),
+            _vm._v(" "),
+            _c("li", [_vm._v("Pretty row 50")])
+          ])
+        ]
+      )
     ]
   )
 }
@@ -2941,13 +2966,13 @@ var content = __webpack_require__(374);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(136)("e4ef3aea", content, false);
+var update = __webpack_require__(136)("4c34126a", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-40b7434f\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
-     var newContent = require("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-40b7434f\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
+   module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-40b7434f\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
+     var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-40b7434f\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -2968,13 +2993,13 @@ var content = __webpack_require__(377);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(136)("72a21688", content, false);
+var update = __webpack_require__(136)("130c88fc", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b851bc22\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
-     var newContent = require("!!../../../node_modules/.css-loader@0.28.7@css-loader/index.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b851bc22\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/.less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/.vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
+   module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b851bc22\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue", function() {
+     var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b851bc22\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/_less-loader@4.0.5@less-loader/dist/cjs.js!../../../node_modules/_vue-loader@13.5.0@vue-loader/lib/selector.js?type=styles&index=0&bustCache!./index.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

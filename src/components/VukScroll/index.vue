@@ -1,7 +1,7 @@
 
 <template lang="html">
     <div id="wrapper" class="vuk-scroll-wrap">
-	<div id="scroller" class="vuk-scroller">
+	<div id="scroller" class="vuk-scroller" @touchend="end()">
     <div class="vuk-scroll-loading">loading</div>
 		<ul>
 			<li v-tap="{method:alert,params:'你是谁'}">Pretty row 1</li>
@@ -95,14 +95,29 @@ export default {
       freeScroll: false,
       scrollX: true,
       bounce: true,
-   
+
       deceleration: 0.009,
-      probeType: 1,
+      probeType: 3,
       ignoreBoundaries: true,
       speedRatioY: 0.4
     });
 
-    this.scroll.on("scroll", function() {});
+    setTimeout(function(){
+        self.scroll.destroy();
+
+    },3000);
+
+    setTimeout(function(){
+        console.log(self.scroll);
+        self.scroll.resetPosition();
+    },6000);
+
+    this.scroll.on("scroll", function() {
+
+
+    });
+
+
   },
   updated() {
     this.scroll.refresh();
@@ -117,6 +132,11 @@ export default {
   methods: {
     alert(val) {
       console.log(val);
+    },
+    end(){
+
+
+      console.log('end');
     }
   },
   components: {}
