@@ -62,7 +62,7 @@
 
 </template>
 <script>
-import IScroll from "../../vender/iscroll-probe.js";
+//import IScroll from "../../vender/iscroll-probe.js";
 export default {
   props: {
     title: {
@@ -89,34 +89,33 @@ export default {
   },
   mounted: function() {
     let self = this;
-    this.scroll = new IScroll("#wrapper", {
-      mouseWheel: false,
-      scrollbars: false,
-      freeScroll: false,
-      scrollX: true,
-      bounce: true,
+    this.start();
+   console.log(this.scroll);
 
-      deceleration: 0.009,
-      probeType: 3,
-      ignoreBoundaries: true,
-      speedRatioY: 0.4
-    });
+    // setTimeout(()=>{
+    //   self.scroll.destroy()
+    // },3000);
+    // setTimeout(()=>{
+     
+    //   self.scroll._init();
+    // },5000);
 
-    setTimeout(function(){
-        self.scroll.destroy();
-
-    },3000);
-
-    setTimeout(function(){
-        console.log(self.scroll);
-        self.scroll.resetPosition();
-    },6000);
 
     this.scroll.on("scroll", function() {
-
-
+      
     });
 
+    this.scroll.on("pulldown", function() {
+      
+    });
+    
+    this.scroll.on("pullup", function() {
+        console.log('pullup');
+    });
+   
+    this.scroll.on('scrollEnd',function(){
+        
+    })
 
   },
   updated() {
@@ -133,12 +132,27 @@ export default {
     alert(val) {
       console.log(val);
     },
-    end(){
-
-
-      console.log('end');
+    end() {
+    
+    },
+    start() {
+      this.scroll = new IScroll("#wrapper", {
+        mouseWheel: false,
+        scrollbars: false,
+        freeScroll: false,
+        scrollX: true,
+        bounce: true,
+        bounceAuto:false,
+        deceleration: 0.006,
+        probeType: 3,
+        ignoreBoundaries: true,
+        speedRatioY: 0.4,
+        bounceTime:300
+     
+      });
     }
   },
+
   components: {}
 };
 </script>
