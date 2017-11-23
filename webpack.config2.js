@@ -27,8 +27,6 @@ module.exports = {
         rules: [{
                 test: /\.vue$/,
                 loader: 'vue-loader',
-
-
             }, {
                 test: /\.css$/,
                 loader: 'css-loader'
@@ -47,13 +45,13 @@ module.exports = {
                 // loader: 'style-loader!css-loader!less-loader'
             },
             {
-                test: /\.(png|jpg|gif)$/,
+                test: /\.(png|jpg|gif|svg)$/,
                 loader: 'url-loader',
                 query: {
                     // 把较小的图片转换成base64的字符串内嵌在生成的js文件里
                     limit: 10000,
                     // 路径要与当前配置文件下的publicPath相结合
-                    name: '../style/[name].[ext]?[hash:7]'
+                    name: 'fonts/[name].[ext]?[hash:7]'
                 }
             },
             {
@@ -61,7 +59,7 @@ module.exports = {
                 loader: 'url-loader',
                 options: {
                     // 把较小的图标转换成base64的字符串内嵌在生成的js文件里
-                    limit: 1,
+                    limit: 10000,
                     name: 'fonts/[name].[ext]?[hash:7]',
                     prefix: 'font'
                 }

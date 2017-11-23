@@ -749,6 +749,10 @@
 		},
 
 		resetPosition: function (time) {
+				if(this.scrollerHeight<=0){
+					return true;
+				};
+
 			var x = this.x,
 				y = this.y;
 
@@ -760,8 +764,7 @@
 				x = this.maxScrollX;
 			}
 
-
-			//console.log(this.hasVerticalScroll);
+		
 
 			if (this.options.bounceAuto) {
 				if (!this.hasVerticalScroll || this.y > 0) {
@@ -771,20 +774,27 @@
 				}
 
 			} else {
-				if (!this.hasVerticalScroll || this.y > this.options.top) {
-					y = this.options.top;
-					this._execEvent('pulldown');
+				if (this.y > this.options.top && this.y < this.maxScrollY - this.options.bottom) {
+						y=0;
+				} else {
+				
+					if (!this.hasVerticalScroll || this.y > this.options.top) {
+						y = this.options.top;
+						this._execEvent('pulldown');
+					}
+					if (!this.hasVerticalScroll || (this.y < this.options.top && this.y > 0)) {
+						y = 0;
+					}
+					if (!this.hasVerticalScroll || (this.y > this.maxScrollY - this.options.bottom && this.y < this.maxScrollY)) {
+						y = this.maxScrollY;
+					}
+					if (!this.hasVerticalScroll || this.y < this.maxScrollY - this.options.bottom) {
+						y = this.maxScrollY - this.options.bottom;
+						this._execEvent('pullup');
+					}
 				}
-				if (!this.hasVerticalScroll || (this.y < this.options.top && this.y > 0)) {
-					y = 0;
-				}
-				if (!this.hasVerticalScroll || (this.y > this.maxScrollY - this.options.bottom && this.y < this.maxScrollY)) {
-					y = this.maxScrollY;
-				}
-				if (!this.hasVerticalScroll || this.y < this.maxScrollY - this.options.bottom) {
-					y = this.maxScrollY - this.options.bottom;
-					this._execEvent('pullup');
-				}
+
+
 			}
 
 
