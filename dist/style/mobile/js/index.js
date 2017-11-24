@@ -687,7 +687,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
 
 exports.default = {
     props: {
@@ -778,12 +777,26 @@ exports.default = {
                 for (var _a = 0; _a < plen; _a++) {
                     this.param[_a][i]['dislike'] = dislike;
                 }
+                this.leftTitle[i]['dislike'] = dislike;
             }
-
             for (var _i = 0; _i < itemlen; _i++) {
-                if (this.param[0][_i]['dislike'] !== true) {}
+                if (this.param[0][_i]['dislike'] !== true) {
+                    var dl = this.param[0][_i]['data'].length; //data长度    
+                    for (var _a2 = 0; _a2 < dl; _a2++) {
+                        //d.data
+                        var _dislike = true;
+                        for (var b = 0; b < plen - 1; b++) {
+                            if (this.param[b][_i]['data'][_a2]['name'] != this.param[b + 1][_i]['data'][_a2]['name']) {
+                                _dislike = false;
+                            }
+                        }
+                        for (var _b = 0; _b < plen; _b++) {
+                            this.param[_b][_i]['data'][_a2]['dislike'] = _dislike;
+                        }
+                        this.leftTitle[_i]['data'][_a2]['dislike'] = _dislike;
+                    }
+                }
             }
-
             console.log(this.param);
         },
         islike: function islike(arr) {
@@ -863,7 +876,6 @@ exports.default = {
                     });
                     var valueitems = configitems[a]["valueitems"];
                     for (var b = 0, lb = valueitems.length; b < lb; b++) {
-
                         paramval[b][paramval[b].length - 1]['data'].push({
                             name: valueitems[b]["value"],
                             type: "value"
@@ -1747,21 +1759,20 @@ var render = function() {
             _vm._l(_vm.param, function(item, index) {
               return _c(
                 "ul",
-                {
-                  staticClass: "paramitems",
-                  attrs: { "data-name": "itemcar0" }
-                },
+                { staticClass: "paramitems" },
                 [
                   _vm._l(item, function(p, i) {
                     return [
                       _c("li", {
                         staticClass: "none-value",
+                        class: { islike: p.dislike },
                         domProps: { innerHTML: _vm._s(p.name) }
                       }),
                       _vm._v(" "),
                       _vm._l(p.data, function(a, d) {
                         return _c("li", {
                           staticClass: "normal-value",
+                          class: { islike: p.dislike, litlike: a.dislike },
                           domProps: { innerHTML: _vm._s(a.name) }
                         })
                       })
@@ -1787,11 +1798,7 @@ var render = function() {
                   _vm._l(_vm.leftTitle, function(item, index) {
                     return [
                       _c("li", { staticClass: "left-base-title" }, [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(item.name) +
-                            "\n                        "
-                        ),
+                        _vm._v("\n        " + _vm._s(item.name) + "\n        "),
                         _vm._m(0, true)
                       ]),
                       _vm._v(" "),
@@ -1854,7 +1861,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "scroll-say-bar" }, [
-      _vm._v("基本参数\n        "),
+      _vm._v("基本参数\n            "),
       _c("div", { staticClass: "left-say-bar" }, [
         _c("em", [_c("i", { staticClass: "icon-stand" }), _vm._v("标配")]),
         _c("em", [_c("i", { staticClass: "icon-nostand" }), _vm._v("选配")]),
@@ -1867,9 +1874,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "left-oper active" }, [
-      _vm._v("\n        隐藏"),
+      _vm._v("\n            隐藏"),
       _c("br"),
-      _vm._v(" 相同项\n    ")
+      _vm._v(" 相同项\n        ")
     ])
   }
 ]
