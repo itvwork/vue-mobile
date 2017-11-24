@@ -852,10 +852,11 @@ ul {
     right: 0;
     background-color: #1b2024;
     overflow: hidden;
-    z-index: 10
+    z-index: 1;
 }
 
 .iscroll-wrapper .iscroller {
+    z-index: 0;
     position: absolute;
     -webkit-tap-highlight-color: transparent;
     -webkit-transform: translateZ(0);
@@ -863,6 +864,7 @@ ul {
     -ms-transform: translateZ(0);
     -o-transform: translateZ(0);
     transform: translateZ(0)
+    
 }
 
 .iscroll-wrapper .scroll-say-bar {
@@ -976,7 +978,8 @@ ul {
     width: 96px;
     text-align: center;
     background-color: #1b2024;
-    border-right: #444 solid 1px
+    border-right: #444 solid 1px;
+    z-index: 22;
 }
 
 .iscroll-wrapper .left-base .left-base-item {

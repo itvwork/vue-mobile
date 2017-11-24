@@ -39,8 +39,7 @@ export default {
     };
   },
   created() {
-
-
+     
   },
   methods: {
     show() {
