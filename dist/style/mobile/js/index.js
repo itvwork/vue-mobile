@@ -636,7 +636,7 @@ if (false) {(function () {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -685,209 +685,245 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
-//
 
 exports.default = {
-    props: {
-        id: {
-            type: String,
-            default: "carwrap"
-        }
-    },
-    data: function data() {
-        return {
-            scroll: "",
-            titlePos: 0,
-            showtitle: [],
-            leftTitle: [],
-            param: []
-        };
-    },
-    created: function created() {
-        this.getdata();
-    },
-    mounted: function mounted() {
-        var self = this;
-        this.start();
-        this.scroll.on("scroll", function () {
-            self.titlePos = this.x;
-        });
-    },
-    updated: function updated() {
-        this.scroll.refresh();
-    },
-
-    methods: {
-        getdata: function getdata() {
-            var _this = this;
-
-            return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-                var data, res;
-                return regeneratorRuntime.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                _context.next = 2;
-                                return _this.$ajax.post("http://h53d.3dwgc.com/model/getContent", {
-                                    data: {
-                                        id: 2
-                                    }
-                                });
-
-                            case 2:
-                                data = _context.sent;
-                                res = JSON.parse(data.data.content);
-
-                                _this.name(res);
-
-                            case 5:
-                            case "end":
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, _this);
-            }))();
-        },
-        start: function start() {
-            this.scroll = new IScroll("#" + this.id, {
-                mouseWheel: false,
-                scrollbars: false,
-                freeScroll: false,
-                scrollX: true,
-                bounce: false,
-                probeType: 3,
-                deceleration: 0.006,
-                ignoreBoundaries: true
-            });
-        },
-        like: function like() {
-            var plen = this.param.length;
-            if (plen <= 1) return true;
-            var itemlen = this.param[0].length;
-            //总标题否相同
-            for (var i = 0; i < itemlen; i++) {
-                var dislike = true;
-                for (var a = 0; a < plen - 1; a++) {
-                    if (JSON.stringify(this.param[a][i]) != JSON.stringify(this.param[a + 1][i])) {
-                        dislike = false;
-                        break;
-                    }
-                }
-                for (var _a = 0; _a < plen; _a++) {
-                    this.param[_a][i]['dislike'] = dislike;
-                }
-                this.leftTitle[i]['dislike'] = dislike;
-            }
-            for (var _i = 0; _i < itemlen; _i++) {
-                if (this.param[0][_i]['dislike'] !== true) {
-                    var dl = this.param[0][_i]['data'].length; //data长度    
-                    for (var _a2 = 0; _a2 < dl; _a2++) {
-                        //d.data
-                        var _dislike = true;
-                        for (var b = 0; b < plen - 1; b++) {
-                            if (this.param[b][_i]['data'][_a2]['name'] != this.param[b + 1][_i]['data'][_a2]['name']) {
-                                _dislike = false;
-                            }
-                        }
-                        for (var _b = 0; _b < plen; _b++) {
-                            this.param[_b][_i]['data'][_a2]['dislike'] = _dislike;
-                        }
-                        this.leftTitle[_i]['data'][_a2]['dislike'] = _dislike;
-                    }
-                }
-            }
-            console.log(this.param);
-        },
-        islike: function islike(arr) {
-            var dislike = true;
-            for (var i = 0, l = arr.length; i < l - 1; i++) {
-                if (JSON.stringify(arr[i]) != JSON.stringify(arr[i + 1])) {
-                    dislike = false;
-                    break;
-                }
-            }
-            return dislike;
-        },
-        name: function name(data) {
-            //处理车型名称
-            var name = data.param[0].paramitems[0].valueitems;
-            var config = data.config;
-            var namehtml = "";
-            var arr = [];
-            var params = [];
-            var paramval = [];
-            for (var i = 0, li = name.length; i < li; i++) {
-                this.showtitle.push({
-                    name: name[i]
-                });
-                paramval[i] = [];
-            }
-            var param = data.param;
-            var paramHtml = "";
-            for (var i = 0, li = param.length; i < li; i++) {
-                params.push({
-                    name: param[i]["name"],
-                    type: "title",
-                    data: []
-                });
-                for (var c = 0, lc = paramval.length; c < lc; c++) {
-                    paramval[c].push({
-                        type: "none",
-                        name: "",
-                        data: []
-                    });
-                }
-                var paramitems = param[i]["paramitems"];
-                for (var a = 0, la = paramitems.length; a < la; a++) {
-                    if (paramitems[a]["name"] != "车型名称") {
-                        params[params.length - 1]["data"].push({
-                            name: paramitems[a]["name"],
-                            type: "param"
-                        });
-                        var valueitems = paramitems[a]["valueitems"];
-                        for (var b = 0, lb = valueitems.length; b < lb; b++) {
-                            paramval[b][paramval[b].length - 1]['data'].push({
-                                name: valueitems[b]["value"],
-                                type: "value"
-                            });
-                        }
-                    }
-                }
-            }
-            for (var i = 0, len = config.length; i < len; i++) {
-                params.push({
-                    name: config[i]["name"],
-                    type: "title",
-                    data: []
-                });
-                for (var c = 0, lc = paramval.length; c < lc; c++) {
-                    paramval[c].push({
-                        type: "none",
-                        name: "",
-                        data: []
-                    });
-                }
-                var configitems = config[i]["configitems"];
-                for (var a = 0, la = configitems.length; a < la; a++) {
-                    params[params.length - 1]["data"].push({
-                        name: configitems[a]["name"],
-                        type: "param"
-                    });
-                    var valueitems = configitems[a]["valueitems"];
-                    for (var b = 0, lb = valueitems.length; b < lb; b++) {
-                        paramval[b][paramval[b].length - 1]['data'].push({
-                            name: valueitems[b]["value"],
-                            type: "value"
-                        });
-                    }
-                }
-            }
-            this.leftTitle = params;
-            this.param = paramval;
-            this.like();
-        }
+  props: {
+    id: {
+      type: String,
+      default: "carwrap"
     }
+  },
+  data: function data() {
+    return {
+      scroll: "",
+      titlePos: 0,
+      showtitle: [],
+      leftTitle: [],
+      param: [],
+      hide: false,
+      begin: {
+        showtitle: [],
+        leftTitle: []
+      },
+      tip: "基本参数"
+    };
+  },
+  created: function created() {
+    this.getdata();
+  },
+  mounted: function mounted() {
+    var self = this;
+    this.start();
+    this.scroll.destroy();
+  },
+  updated: function updated() {
+    this.scroll.refresh();
+  },
+
+
+  methods: {
+    restart: function restart() {
+      this.showtitle = JSON.parse(JSON.stringify(this.begin.showtitle));
+      this.param = JSON.parse(JSON.stringify(this.begin.param));
+      this.like();
+      this.leftnav();
+      this.scroll.scrollTo(0, 0);
+    },
+    getdata: function getdata() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var data, res;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _this.$ajax.post("http://h53d.3dwgc.com/model/getContent", {
+                  data: {
+                    id: 2
+                  }
+                });
+
+              case 2:
+                data = _context.sent;
+                res = JSON.parse(data.data.content);
+
+                _this.name(res);
+                _this.like();
+                _this.leftnav();
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, _this);
+      }))();
+    },
+    del: function del(index) {
+      if (this.param.length <= 1) return;
+      this.param.splice(index, 1);
+      this.showtitle.splice(index, 1);
+      this.like();
+      this.leftnav();
+    },
+    start: function start() {
+      this.scroll = new IScroll("#" + this.id, {
+        mouseWheel: false,
+        scrollbars: false,
+        freeScroll: false,
+        scrollX: true,
+        bounce: false,
+        probeType: 3,
+        deceleration: 0.006
+        // ignoreBoundaries: true
+      });
+      var self = this;
+      this.scroll.on("scroll", function () {
+        self.titlePos = this.x;
+      });
+    },
+
+    //查找相同的数据
+    like: function like() {
+      var plen = this.param.length;
+      if (plen <= 1) return true;
+      var itemlen = this.param[0].length;
+      //总标题否相同
+      for (var i = 0; i < itemlen; i++) {
+        var dislike = true;
+        for (var a = 0; a < plen - 1; a++) {
+          if (JSON.stringify(this.param[a][i]) != JSON.stringify(this.param[a + 1][i])) {
+            dislike = false;
+            break;
+          }
+        }
+        for (var _a = 0; _a < plen; _a++) {
+          this.param[_a][i]["dislike"] = dislike;
+        }
+        this.leftTitle[i]["dislike"] = dislike;
+      }
+      for (var _i = 0; _i < itemlen; _i++) {
+        if (this.param[0][_i]["dislike"] !== true) {
+          var dl = this.param[0][_i]["data"].length; //data长度
+          for (var _a2 = 0; _a2 < dl; _a2++) {
+            //d.data
+            var _dislike = true;
+            for (var b = 0; b < plen - 1; b++) {
+              if (this.param[b][_i]["data"][_a2]["name"] != this.param[b + 1][_i]["data"][_a2]["name"]) {
+                _dislike = false;
+              }
+            }
+            for (var _b = 0; _b < plen; _b++) {
+              this.param[_b][_i]["data"][_a2]["dislike"] = _dislike;
+            }
+            this.leftTitle[_i]["data"][_a2]["dislike"] = _dislike;
+          }
+        }
+      }
+      console.log(this.param);
+    },
+
+    //左边相同数据
+    leftnav: function leftnav() {
+      var param = this.param[0];
+      for (var i = 0, l = param.length; i < l; i++) {
+        if (param[i]["dislike"] === true) {
+          this.leftTitle[i]["dislike"] = true;
+        } else {
+          this.leftTitle[i]["dislike"] = false;
+          for (var a = 0, ld = param[i]["data"].length; a < ld; a++) {
+            this.leftTitle[i]["data"][a]["dislike"] = param[i]["data"][a]["dislike"];
+          }
+        }
+      }
+    },
+    name: function name(data) {
+      //整理数据
+      //处理车型名称
+      var name = data.param[0].paramitems[0].valueitems;
+      var config = data.config;
+      var namehtml = "";
+      var arr = [];
+      var params = [];
+      var paramval = [];
+      for (var i = 0, li = name.length; i < li; i++) {
+        this.showtitle.push({
+          name: name[i]
+        });
+        this.begin.showtitle.push({
+          name: name[i]
+        });
+        paramval[i] = [];
+      }
+
+      var param = data.param;
+      var paramHtml = "";
+      for (var i = 0, li = param.length; i < li; i++) {
+        params.push({
+          name: param[i]["name"],
+          type: "title",
+          data: []
+        });
+        for (var c = 0, lc = paramval.length; c < lc; c++) {
+          paramval[c].push({
+            type: "none",
+            name: "",
+            data: []
+          });
+        }
+        var paramitems = param[i]["paramitems"];
+        for (var a = 0, la = paramitems.length; a < la; a++) {
+          if (paramitems[a]["name"] != "车型名称") {
+            params[params.length - 1]["data"].push({
+              name: paramitems[a]["name"],
+              type: "param"
+            });
+            var valueitems = paramitems[a]["valueitems"];
+            for (var b = 0, lb = valueitems.length; b < lb; b++) {
+              paramval[b][paramval[b].length - 1]["data"].push({
+                name: valueitems[b]["value"],
+                type: "value"
+              });
+            }
+          }
+        }
+      }
+      for (var i = 0, len = config.length; i < len; i++) {
+        params.push({
+          name: config[i]["name"],
+          type: "title",
+          data: []
+        });
+        for (var c = 0, lc = paramval.length; c < lc; c++) {
+          paramval[c].push({
+            type: "none",
+            name: "",
+            data: []
+          });
+        }
+        var configitems = config[i]["configitems"];
+        for (var a = 0, la = configitems.length; a < la; a++) {
+          params[params.length - 1]["data"].push({
+            name: configitems[a]["name"],
+            type: "param"
+          });
+          var valueitems = configitems[a]["valueitems"];
+          for (var b = 0, lb = valueitems.length; b < lb; b++) {
+            paramval[b][paramval[b].length - 1]["data"].push({
+              name: valueitems[b]["value"],
+              type: "value"
+            });
+          }
+        }
+      }
+      this.leftTitle = params;
+      this.param = paramval;
+      this.begin["leftTitle"] = params;
+      this.begin["param"] = paramval;
+    }
+  }
 };
 
 /***/ }),
@@ -948,6 +984,7 @@ exports.default = {
   mounted: function mounted() {
     var self = this;
     this.start();
+    this.scroll.destroy();
     // setTimeout(()=>{
     //   self.scroll.destroy()
     // },3000);
@@ -1104,6 +1141,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
 
 exports.default = {
   data: function data() {
@@ -1111,78 +1150,79 @@ exports.default = {
       nav: false,
       pro: products,
       shop: [{
-        title: '中华店',
-        addr: '广州市中华路203',
-        src: './style/mobile/css/img/after.jpg',
-        distance: '20km'
+        title: "中华店",
+        addr: "广州市中华路203",
+        src: "./style/mobile/css/img/after.jpg",
+        distance: "20km"
       }, {
-        title: '中华店',
-        addr: '广州市中华路203',
-        src: './style/mobile/css/img/after.jpg',
-        distance: '20km'
+        title: "中华店",
+        addr: "广州市中华路203",
+        src: "./style/mobile/css/img/after.jpg",
+        distance: "20km"
       }, {
-        title: '中华店',
-        addr: '广州市中华路203',
-        src: './style/mobile/css/img/after.jpg',
-        distance: '20km'
+        title: "中华店",
+        addr: "广州市中华路203",
+        src: "./style/mobile/css/img/after.jpg",
+        distance: "20km"
       }, {
-        title: '中华店',
-        addr: '广州市中华路203',
-        src: './style/mobile/css/img/after.jpg',
-        distance: '20km'
+        title: "中华店",
+        addr: "广州市中华路203",
+        src: "./style/mobile/css/img/after.jpg",
+        distance: "20km"
       }, {
-        title: '中华店',
-        addr: '广州市中华路203',
-        src: './style/mobile/css/img/after.jpg',
-        distance: '20km'
+        title: "中华店",
+        addr: "广州市中华路203",
+        src: "./style/mobile/css/img/after.jpg",
+        distance: "20km"
       }, {
-        title: '中华店',
-        addr: '广州市中华路203',
-        src: './style/mobile/css/img/after.jpg',
-        distance: '20km'
+        title: "中华店",
+        addr: "广州市中华路203",
+        src: "./style/mobile/css/img/after.jpg",
+        distance: "20km"
       }, {
-        title: '中华店',
-        addr: '广州市中华路203',
-        src: './style/mobile/css/img/after.jpg',
-        distance: '20km'
+        title: "中华店",
+        addr: "广州市中华路203",
+        src: "./style/mobile/css/img/after.jpg",
+        distance: "20km"
       }, {
-        title: '中华店',
-        addr: '广州市中华路203',
-        src: './style/mobile/css/img/after.jpg',
-        distance: '20km'
+        title: "中华店",
+        addr: "广州市中华路203",
+        src: "./style/mobile/css/img/after.jpg",
+        distance: "20km"
       }, {
-        title: '中华店',
-        addr: '广州市中华路203',
-        src: './style/mobile/css/img/after.jpg',
-        distance: '20km'
+        title: "中华店",
+        addr: "广州市中华路203",
+        src: "./style/mobile/css/img/after.jpg",
+        distance: "20km"
       }, {
-        title: '中华店',
-        addr: '广州市中华路203',
-        src: './style/mobile/css/img/after.jpg',
-        distance: '20km'
+        title: "中华店",
+        addr: "广州市中华路203",
+        src: "./style/mobile/css/img/after.jpg",
+        distance: "20km"
       }, {
-        title: '中华店',
-        addr: '广州市中华路203',
-        src: './style/mobile/css/img/after.jpg',
-        distance: '20km'
+        title: "中华店",
+        addr: "广州市中华路203",
+        src: "./style/mobile/css/img/after.jpg",
+        distance: "20km"
       }, {
-        title: '中华店',
-        addr: '广州市中华路203',
-        src: './style/mobile/css/img/after.jpg',
-        distance: '20km'
+        title: "中华店",
+        addr: "广州市中华路203",
+        src: "./style/mobile/css/img/after.jpg",
+        distance: "20km"
       }, {
-        title: '中华店',
-        addr: '广州市中华路203',
-        src: './style/mobile/css/img/after.jpg',
-        distance: '20km'
+        title: "中华店",
+        addr: "广州市中华路203",
+        src: "./style/mobile/css/img/after.jpg",
+        distance: "20km"
       }],
-      scroll: '',
+      scroll: "",
       once: 0
     };
   },
 
   components: {
-    VukScroll: _VukScroll2.default, VukCar: _VukCar2.default
+    VukScroll: _VukScroll2.default,
+    VukCar: _VukCar2.default
   },
   created: function created() {},
   mounted: function mounted() {
@@ -1191,17 +1231,15 @@ exports.default = {
     // 店铺
 
     this.scroll = this.$refs.shop.scroll;
+    this.car = this.$refs.car.scroll;
     this.scroll.destroy();
-    this.scroll.on('pulldown', function () {
-      console.log('pulldown');
+    this.scroll.on("pulldown", function () {
       //  setTimeout(function(){
       //    self.scroll.scrollTo(0,0,200);
       //  },400)
     });
 
-    this.scroll.on('pullup', function () {
-      console.log('pullup');
-
+    this.scroll.on("pullup", function () {
       //  setTimeout(function(){
       //    self.scroll.scrollTo(0,self.scroll.maxScrollY,200);
       //  },400)
@@ -1210,13 +1248,24 @@ exports.default = {
 
   methods: {
     changeNav: function changeNav(nav) {
+      var self = this;
       nav == this.nav ? this.nav = false : this.nav = nav;
 
       if (this.nav == false && nav == "book") {
         this.scroll.destroy();
       }
-      if (this.nav == 'book') {
+      if (this.nav == "book") {
         this.scroll._init();
+      }
+
+      if (this.nav == false && nav == "deploy") {
+
+        this.car.destroy();
+      }
+      if (this.nav == "deploy") {
+
+        this.$refs.car.restart();
+        this.car._init();
       }
     }
   }
@@ -1259,7 +1308,7 @@ exports = module.exports = __webpack_require__(125)(undefined);
 
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: ifont;\n  src: url(//at.alicdn.com/t/font_253777_bjzywii3uv8l4n29.eot);\n  src: url(//at.alicdn.com/t/font_253777_bjzywii3uv8l4n29.eot?#iefix) format('embedded-opentype'), url(//at.alicdn.com/t/font_253777_bjzywii3uv8l4n29.woff) format('woff'), url(//at.alicdn.com/t/font_253777_bjzywii3uv8l4n29.ttf) format('truetype'), url(//at.alicdn.com/t/font_253777_bjzywii3uv8l4n29.svg#ifont) format('svg');\n}\n.icon,\n.ifont,\ni {\n  font-family: ifont!important;\n  font-style: normal;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.open {\n  display: block;\n  background-color: rgba(0, 0, 0, 0.6);\n  position: fixed;\n  z-index: 1001;\n  border-radius: .4rem;\n  -webkit-border-radius: .4rem;\n  -moz-border-radius: .4rem;\n  text-align: center;\n  left: 50%;\n  box-shadow: rgba(255, 255, 255, 0.2) 0 0 4px;\n  transform: translate(-50%, 0);\n}\n.cricle-indoor .cricle-line,\n.cricle-indoor .cricle-line2 {\n  box-shadow: rgba(255, 249, 201, 0.4) 0 0 4px inset, rgba(255, 249, 201, 0.4) 0 0 4px;\n  box-sizing: border-box;\n}\n.open:before {\n  content: '\\E72F';\n  color: #fff;\n}\n.open.active:before {\n  content: '\\E72E';\n  color: #aaa;\n}\n.close-tier {\n  position: absolute;\n  font-size: .36rem;\n  z-index: 10;\n}\n.close-tier:before {\n  content: '\\E6A9';\n}\n.complete {\n  padding-top: 4px;\n}\n.complete:before {\n  content: '\\E731';\n  font-size: 72px;\n  text-shadow: #ffef6b 0 0 3px;\n}\nhtml {\n  padding: 0;\n  margin: 0;\n  background-color: #99e0f8;\n  background-size: 100%;\n  height: 100%;\n  font-family: Helvetica, 'STHeiti STXihei', 'Microsoft JhengHei', 'Microsoft YaHei', Arial;\n  font-size: 110px;\n  font-family: -apple-system-font, \"Helvetica Neue\", sans-serif;\n}\nbody {\n  font-size: .12rem;\n  color: #fff;\n}\na,\nbody h1,\ndiv,\nh2,\nh3,\nh4,\nh5,\nh6,\ni,\nli,\nul {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n  font-style: normal;\n}\n@keyframes rotate {\n0% {\n    transform: rotate(0);\n    -webkit-transform: rotate(0);\n}\n100% {\n    transform: rotate(360deg);\n    -webkit-transform: rotate(360deg);\n}\n}\n@-webkit-keyframes rotate {\n0% {\n    transform: rotate(0);\n    -webkit-transform: rotate(0);\n}\n100% {\n    transform: rotate(360deg);\n    -webkit-transform: rotate(360deg);\n}\n}\n@keyframes startLeft {\n0% {\n    -webkit-filter: blur(0);\n    filter: blur(0);\n}\n100% {\n    display: none;\n    left: -100%;\n}\n}\n@-webkit-keyframes startLeft {\n0% {\n    -webkit-filter: blur(0);\n    filter: blur(0);\n}\n100% {\n    display: none;\n    left: -100%;\n}\n}\n@keyframes startRight {\n0% {\n    -webkit-filter: blur(0);\n    filter: blur(0);\n}\n100% {\n    display: none;\n    right: -100%;\n}\n}\n@-webkit-keyframes startRight {\n0% {\n    -webkit-filter: blur(0);\n    filter: blur(0);\n}\n100% {\n    display: none;\n    right: -100%;\n}\n}\n.box-out,\n.loading-box {\n  top: 0;\n  bottom: 0;\n  right: 0;\n  left: 0;\n}\n.loading-box {\n  position: fixed;\n  overflow: hidden;\n  color: #fff;\n  background-color: #1b2024;\n  z-index: 9999;\n  text-align: center;\n  font-size: 30px;\n}\n.start-left {\n  animation: startLeft 0.6s ease-in-out forwards;\n  -webkit-animation: startLeft 0.6s ease-in-out forwards;\n}\n.start-right {\n  -webkit-animation: startRight 0.6s ease-in-out forwards;\n}\n.box-out {\n  position: absolute;\n  z-index: 0;\n}\n.icon-logo {\n  position: absolute;\n  width: 200px;\n  height: 200px;\n  left: 50%;\n  top: 50%;\n  margin-left: -100px;\n  transform: scale(0.8, 0.8);\n  z-index: 20;\n}\n.left-cricle,\n.right-cricle {\n  width: 50%;\n  height: 100%;\n  float: left;\n  overflow: hidden;\n  position: relative;\n  box-sizing: border-box;\n}\n.cricle-line {\n  border: 2px solid transparent;\n  width: 180px;\n  height: 180px;\n  border-radius: 200px;\n  box-sizing: border-box;\n  position: absolute;\n  top: 10px;\n}\n.left-cricle .cricle-line {\n  border-left: #ff5600 solid 2px;\n  border-top: #ff5600 solid 2px;\n  left: 10px;\n}\n.right-cricle .cricle-line {\n  border-right: #ff5600 solid 2px;\n  border-top: #ff5600 solid 2px;\n  position: absolute;\n  left: -90px;\n}\n.out-box-loading {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n}\n.cricle-indoor {\n  width: 100%;\n  height: 100%;\n  position: relative;\n  animation: rotate 6s linear infinite alternate;\n  -webkit-animation: rotate 6s linear infinite alternate;\n}\n.cricle-indoor .cricle-solid {\n  position: absolute;\n  width: 108px;\n  height: 108px;\n  background-color: #ff00f4;\n  left: 50%;\n  top: 50%;\n  margin-left: -54px;\n  margin-top: -54px;\n  background: -webkit-linear-gradient(-60deg, rgba(234, 80, 23, 0.9), rgba(255, 88, 0, 0.6));\n  background: linear-gradient(60deg, rgba(234, 80, 23, 0.9), rgba(255, 88, 0, 0.6));\n  border-radius: 100px;\n  z-index: 10;\n}\n.cricle-indoor .cricle-line {\n  position: absolute;\n  height: 120px;\n  width: 120px;\n  margin-left: -60px;\n  margin-top: -60px;\n  left: 50%;\n  top: 50%;\n  border: 1.4px solid #fd5306;\n  border-radius: 120px;\n  -webkit-border-radius: 120px;\n  -moz-border-radius: 120px;\n  z-index: 1;\n  background-color: #1b2024;\n}\n.cricle-indoor .cricle-line2 {\n  position: absolute;\n  width: 144px;\n  height: 144px;\n  left: 50%;\n  top: 50%;\n  margin-left: -72px;\n  margin-top: -72px;\n  transform: rotate(45deg);\n  border-radius: 150px;\n  -webkit-border-radius: 150px;\n  -moz-border-radius: 150px;\n  border: 1.4px solid #fd5306;\n  border-top: transparent solid 1.4px;\n  z-index: 0;\n}\n.cricle-indoor .cricle-piece {\n  width: 148px;\n  height: 148px;\n  box-sizing: border-box;\n  border: 5px solid transparent;\n  border-top: #fd5306 solid 5px;\n  left: 50%;\n  top: 50%;\n  margin-left: -74px;\n  margin-top: -74px;\n  position: absolute;\n  border-radius: 148px;\n  -webkit-border-radius: 148px;\n  -moz-border-radius: 148px;\n}\n.cricle-indoor .c1 {\n  transform: rotate(210deg);\n}\n.cricle-indoor .c2 {\n  transform: rotate(60deg);\n}\n.cricle-indoor .c3 {\n  transform: rotate(-10deg);\n}\n.cricle-indoor .black-box {\n  width: 30px;\n  height: 8px;\n  position: absolute;\n  background-color: #1b2024;\n  right: 55px;\n  top: 32px;\n  transform: rotate(28deg);\n}\n.cricle-indoor .cricle-dot {\n  background-color: #ff5600;\n  position: absolute;\n  box-shadow: rgba(255, 249, 201, 0.4) 0 0 4px;\n}\n.cricle-indoor .dot1 {\n  width: 12px;\n  height: 12px;\n  border-radius: 12px;\n  -webkit-border-radius: 12px;\n  -moz-border-radius: 12px;\n  left: 24px;\n  top: 80px;\n}\n.cricle-indoor .dot2 {\n  width: 6px;\n  height: 6px;\n  border-radius: 6px;\n  -webkit-border-radius: 6px;\n  -moz-border-radius: 6px;\n  left: 150px;\n  top: 145px;\n}\n.cricle-indoor .dot3 {\n  width: 6px;\n  height: 6px;\n  border-radius: 6px;\n  -webkit-border-radius: 6px;\n  -moz-border-radius: 6px;\n  left: 128px;\n  top: 33px;\n}\n.car-name {\n  text-align: center;\n  font-weight: 400;\n}\n.pot {\n  background-color: #ff5200;\n  position: absolute;\n  z-index: 1;\n  border-radius: 100%;\n  -webkit-border-radius: 100%;\n  -moz-border-radius: 100%;\n}\n.item-grade-wrap,\n.title-shop {\n  background-color: rgba(0, 0, 0, 0.6);\n}\n.show-number {\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  transform: translate(-50%, -50%);\n  text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);\n  font-weight: 400;\n  font-size: 0.3rem;\n}\n.left-box,\n.right-box {\n  top: 0;\n  z-index: 1000;\n  bottom: 0;\n  overflow: hidden;\n}\n.tips-click {\n  font-size: .2rem;\n  color: #aaa;\n  font-weight: 400;\n  display: block;\n}\n.left-box {\n  width: 50%;\n  left: 0;\n  position: fixed;\n}\n.left-box .loading-box {\n  position: absolute;\n  width: 200%;\n}\n.right-box {\n  width: 50%;\n  right: 0;\n  position: fixed;\n}\n.right-box .loading-box {\n  position: absolute;\n  width: 200%;\n  left: -100%;\n}\n.item-grade-wrap,\n.nav-wrap {\n  left: 0;\n  position: absolute;\n  z-index: 100;\n  box-sizing: border-box;\n  right: 0;\n}\n.item-grade-wrap {\n  overflow: hidden;\n  padding-top: 20px;\n}\n.item-grade-wrap .close-tier {\n  font-size: 24px;\n}\n.item-grade-wrap .grade-title {\n  position: absolute;\n  text-align: center;\n  width: 100%;\n  top: 8px;\n  font-size: 14px;\n}\n.ul-item-grad {\n  font-size: 0;\n  padding: 10px;\n}\n.ul-item-grad .active .item-inwrap {\n  border-image: url(" + __webpack_require__(63) + ") 1 1 stretch;\n  -webkit-border-image: url(" + __webpack_require__(63) + ") 1 1 stretch;\n}\n.ul-item-grad li {\n  display: inline-block;\n  box-sizing: border-box;\n  font-size: 14px;\n  transform: skew(-10deg, 0deg);\n  padding: 4px 6px;\n}\n.ul-item-grad li .item-name {\n  text-align: center;\n  transform: skew(10deg, 0deg);\n  padding: 0;\n  margin: 0;\n  font-size: 0.12rem;\n}\n.ul-item-grad li .item-inwrap {\n  width: 100%;\n  box-sizing: border-box;\n  border: 1px solid transparent;\n  padding: 4px;\n}\n.ul-item-grad li .item-inwrap .img-box {\n  font-size: 0;\n  overflow: hidden;\n}\n.ul-item-grad li .item-inwrap .img-box img {\n  transform: skew(10deg, 0deg);\n  transform: translateX(-5%);\n  width: 100%;\n}\n.nav-wrap {\n  bottom: 0;\n  font-size: 0;\n}\n.nav-wrap .btn-wrap {\n  width: 25%;\n  display: inline-block;\n  font-size: 0.14rem;\n}\n.nav-wrap .btn-wrap i {\n  background-image: url(" + __webpack_require__(340) + ");\n  background-repeat: no-repeat;\n  margin: auto;\n  text-align: center;\n}\n.nav-wrap .active i {\n  background-image: url(" + __webpack_require__(339) + ");\n  background-repeat: no-repeat;\n}\n.title-shop {\n  border-radius: 40px;\n  -webkit-border-radius: 40px;\n  -moz-border-radius: 40px;\n  position: fixed;\n  left: 50%;\n  display: block;\n  transform: translateX(-50%);\n  top: 10px;\n  box-sizing: border-box;\n  white-space: nowrap;\n  z-index: 100;\n}\n.box-book {\n  position: absolute;\n  left: 0;\n  top: 0;\n  right: 0;\n  z-index: 100;\n  background-color: rgba(0, 0, 0, 0.8);\n  box-sizing: border-box;\n}\n.box-book .book-content-box {\n  height: 100%;\n  width: 100%;\n  box-sizing: border-box;\n  position: relative;\n}\n.box-book .book-content-box .book-copyright {\n  bottom: 15px;\n  position: absolute;\n  right: 0;\n  left: 0;\n  text-align: center;\n  color: #aaa;\n}\n.box-book .book-content-box .book-bg {\n  background: 0 0;\n  background-color: none;\n}\n.box-book .book-content-box .car-title-img {\n  position: absolute;\n  right: 0;\n  width: 50%;\n  max-width: 160px;\n}\n.box-book .book-content-box .book-word-box {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.box-book .book-content-box .book-word-box .tow-code-box {\n  background-color: rgba(143, 83, 55, 0.6);\n  border: 1px solid #958571;\n  padding: .08rem;\n  box-sizing: border-box;\n}\n.box-book .book-content-box .book-word-box .tow-code-box img {\n  width: 100%;\n  height: 100%;\n}\n.tel-phone {\n  display: block;\n  position: relative;\n}\n.tel-phone span {\n  font-size: .2rem;\n  position: absolute;\n  display: block;\n  width: 100%;\n  text-align: center;\n  color: #fff;\n}\n.tel-phone em {\n  top: 100%;\n  display: block;\n  position: absolute;\n  font-style: normal;\n  line-height: .rem;\n  text-align: center;\n  width: 100%;\n  color: #bb8c47;\n  font-size: 0.18rem;\n}\n.btn-canvas {\n  position: absolute;\n  z-index: 0;\n}\n.color-box-bar,\n.view-bar {\n  z-index: 100;\n  position: absolute;\n}\n.book-title {\n  position: absolute;\n  left: 20px;\n  font-size: 0.2rem;\n}\n.color-box-bar {\n  height: .5rem;\n  bottom: 66px;\n  left: 0;\n  right: 0;\n}\n.color-box-bar .color-ul {\n  display: flex;\n  display: -webkit- flex;\n  flex-flow: row;\n  -webkit-flex: row;\n}\n.color-box-bar .color-ul .active {\n  border-image: url(" + __webpack_require__(63) + ") 1 1 stretch;\n  -webkit-border-image: url(" + __webpack_require__(63) + ") 1 1 stretch;\n}\n.color-box-bar .color-ul li {\n  height: .36rem;\n  flex: 1;\n  margin: 0;\n  transform: skew(-12deg, 0deg);\n  padding: 3px;\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  border: 1px solid transparent;\n}\n.color-box-bar .color-ul li i {\n  display: block;\n  height: 100%;\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.color-box-bar .color-ul li i em {\n  display: block;\n  width: 100%;\n  height: 100%;\n  background: linear-gradient(0deg, rgba(0, 0, 0, 0.14), rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.14));\n}\n.red1 {\n  background-color: #d1322f;\n}\n.darkblue {\n  background-color: #2e4b5d;\n}\n.green {\n  background-color: #9ba640;\n}\n.gray1 {\n  background-color: #676b6a;\n}\n.gray2 {\n  background-color: silver;\n}\n.view-bar {\n  width: 1.2rem;\n  background-color: rgba(68, 68, 68, 0.6);\n  padding: 10px;\n  border-radius: 30px;\n  -webkit-border-radius: 30px;\n  -moz-border-radius: 30px;\n  overflow: hidden;\n  bottom: 80px;\n  left: 50%;\n  display: flex;\n  display: -webkit- flex;\n  flex-flow: row;\n  -webkit-flex: row;\n  transform: translate(-50%, 0);\n}\n.view-bar span {\n  flex: 1;\n  -webkit-flex: 1;\n  text-align: center;\n}\n.view-bar em {\n  position: absolute;\n  width: 54%;\n  background-color: rgba(68, 68, 68, 0.7);\n  height: 100%;\n  top: 0;\n  left: 0;\n  border-radius: 20px;\n  -webkit-border-radius: 20px;\n  -moz-border-radius: 20px;\n  z-index: -1;\n}\n.copyright,\n.mpa-title {\n  width: 100%;\n  text-align: center;\n}\n.view-bar.active em {\n  left: 48%;\n}\n.hide {\n  display: none;\n}\n.mapbox {\n  position: absolute;\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  right: 0;\n  left: 0;\n  background-color: rgba(0, 0, 0, 0.6);\n  top: 0;\n  z-index: 100;\n}\n.mapbox .close-tier {\n  font-size: 0.24rem;\n}\n.mpa-title {\n  line-height: .4rem;\n  font-size: .18rem;\n  position: absolute;\n  top: 0;\n}\n.map-show-box {\n  height: 100%;\n}\n.map-show-box iframe {\n  border: none;\n}\n.fill-mode-FILL_WINDOW {\n  transform: translate3d(0, 0, 0);\n  -webkit-transform: translate3d(0, 0, 0);\n}\n.copyright {\n  position: fixed;\n  color: #999;\n  z-index: 1000;\n  left: 0;\n  right: 0;\n  font-size: 0.12rem;\n}\n.bgcolor-bar {\n  transform: rotate(90deg);\n  z-index: 300;\n  position: absolute;\n  width: 30px;\n  right: 0;\n  background-color: #9ba640;\n}\n.bg-bar-clor {\n  position: absolute;\n  bottom: 80px;\n  top: 55px;\n  width: 14px;\n  right: 10px;\n  border: 1px solid #eee;\n  z-index: 1;\n}\n.bg-bar-clor .bg-item-clor {\n  height: 16.6666%;\n}\n.iscroll-wrapper {\n  position: absolute;\n  -ms-touch-action: none;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-text-size-adjust: none;\n  -moz-text-size-adjust: none;\n  -ms-text-size-adjust: none;\n  -o-text-size-adjust: none;\n  text-size-adjust: none;\n  top: 0;\n  bottom: 44px;\n  left: 0;\n  right: 0;\n  background-color: #1b2024;\n  overflow: hidden;\n  z-index: 1;\n}\n.iscroll-wrapper .iscroller {\n  z-index: 0;\n  position: absolute;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-transform: translateZ(0);\n  -moz-transform: translateZ(0);\n  -ms-transform: translateZ(0);\n  -o-transform: translateZ(0);\n  transform: translateZ(0);\n}\n.iscroll-wrapper .scroll-say-bar {\n  position: fixed;\n  top: 84px;\n  left: 0;\n  height: 30px;\n  border-bottom: #444 solid 1px;\n  width: 100%;\n  line-height: 30px;\n  padding: 0 10px;\n  box-sizing: border-box;\n  background-color: #1b2024;\n}\n.iscroll-wrapper .scroll-say-bar .base-right {\n  float: right;\n}\n.iscroll-wrapper .scroll-say-bar .base-right .outer-radio {\n  display: block;\n  width: 20px;\n  height: 20px;\n  border: 1px solid #e86004;\n  box-sizing: border-box;\n  margin-top: 4px;\n  border-radius: 20px;\n  -webkit-border-radius: 20px;\n  -moz-border-radius: 20px;\n  padding: 2px;\n  float: left;\n}\n.iscroll-wrapper .scroll-say-bar .base-right .outer-radio .inter-radio {\n  width: 14px;\n  height: 14px;\n  display: block;\n  border: 1px solid #e86004;\n  border-radius: 12px;\n  -webkit-border-radius: 12px;\n  -moz-border-radius: 12px;\n  box-sizing: border-box;\n}\n.iscroll-title .car-title li,\n.iscroll-wrapper .left-base li,\n.iscroll-wrapper .left-oper {\n  border-bottom: #444 solid 1px;\n}\n.iscroll-wrapper .scroll-say-bar .base-right .left {\n  float: left;\n}\n.iscroll-wrapper .scroll-say-bar .base-right .left .inter-radio {\n  background-color: #e86004;\n}\n.iscroll-wrapper .scroll-say-bar .base-right .left span {\n  float: left;\n  padding-left: 5px;\n  padding-right: 10px;\n}\n.iscroll-wrapper .scroll-say-bar .base-right .right {\n  float: left;\n}\n.iscroll-wrapper .scroll-say-bar .base-right .right i {\n  color: #e86004;\n}\n.iscroll-wrapper .scroll-say-bar .base-right .right span {\n  padding-left: 5px;\n  padding-right: 10px;\n}\n.iscroll-wrapper .left-oper {\n  width: 96px;\n  text-align: center;\n  line-height: 24px;\n  height: 84px;\n  padding-top: 18px;\n  box-sizing: border-box;\n  position: fixed;\n  left: 0;\n  top: 0;\n  background-color: #1b2024;\n  border-right: #444 solid 1px;\n}\n.iscroll-wrapper .iscroll-content {\n  width: 3000px;\n  position: relative;\n}\n.iscroll-wrapper .scroll-ul li {\n  float: left;\n  width: 100px;\n  height: 2000px;\n  list-style: none;\n  background-color: #eee;\n  margin: 5px;\n}\n.iscroll-wrapper .left-base {\n  position: absolute;\n  left: 0;\n  color: #fff;\n  top: 83px;\n  width: 96px;\n  text-align: center;\n  background-color: #1b2024;\n  border-right: #444 solid 1px;\n  z-index: 22;\n}\n.iscroll-wrapper .left-base .left-base-item {\n  height: 50px;\n  -webkit-align-items: center;\n  align-items: center;\n  display: -webkit-flex;\n  display: flex;\n  text-align: center;\n  justify-content: center;\n  -webkit-box-align: center;\n}\n.iscroll-wrapper .left-base .left-base-title {\n  position: relative;\n  height: 30px;\n}\n.iscroll-wrapper .left-base .left-base-title .left-say-bar {\n  position: absolute;\n  left: 96px;\n  top: 0;\n  min-width: 250%;\n  background-color: #1b2024;\n  height: 30px;\n}\n.iscroll-title {\n  position: fixed;\n  min-width: 100%;\n  left: 0;\n  top: 0;\n  padding-left: 96px;\n  background-color: #1b2024;\n  width: 8000px;\n}\n.iscroll-title .car-title {\n  float: left;\n}\n.iscroll-title .car-title li {\n  float: left;\n  position: relative;\n  width: 120px;\n  box-sizing: border-box;\n  padding: 20px 5px 10px;\n  height: 84px;\n  border-right: #444 solid 1px;\n}\n.iscroll-title .car-title li i {\n  display: block;\n  width: 30px;\n  height: 30px;\n  position: absolute;\n  right: 0;\n  top: 0;\n  box-sizing: border-box;\n  border-left: transparent solid 15px;\n  border-bottom: transparent solid 15px;\n  border-right: #494d50 solid 15px;\n  border-top: #494d50 solid 15px;\n}\n.iscroll-title .car-title li i:before {\n  content: '\\E606';\n  position: absolute;\n  top: -12px;\n  right: -15px;\n  font-size: 14px;\n}\n.parmsbox {\n  color: #fff;\n  font-size: 0;\n  padding-top: 83px;\n  padding-left: 96px;\n}\n.parmsbox .paramitems {\n  display: inline-block;\n  width: 120px;\n  box-sizing: border-box;\n}\n.parmsbox .paramitems li {\n  border-bottom: #444 solid 1px;\n  font-size: .12rem;\n  text-align: center;\n}\n.parmsbox .paramitems .normal-value {\n  height: 50px;\n  color: #fff;\n  overflow: hidden;\n  line-height: 50px;\n  border-right: #444 solid 1px;\n  -webkit-align-items: center;\n  align-items: center;\n  display: -webkit-flex;\n  display: flex;\n  text-align: center;\n  justify-content: center;\n  -webkit-box-align: center;\n  background-color: #362b24;\n}\n.parmsbox .paramitems [data-like=\"1\"] {\n  background-color: #1b2024;\n}\n.parmsbox .paramitems .none-value {\n  height: 30px;\n}\n.iscroll-wrapper [hide=\"1\"] [data-like=\"1\"] {\n  display: none;\n}\n.left-say-bar {\n  float: right;\n  text-align: right;\n}\n.left-say-bar em {\n  font-style: normal;\n  line-height: 30px;\n  position: relative;\n  padding-left: 20px;\n  margin-left: 10px;\n}\n.left-say-bar em i {\n  position: absolute;\n  left: 0;\n  color: #e86004;\n}\n.left-say-bar .icon-stand:before {\n  content: '\\E734';\n  font-size: 20px;\n}\n.left-say-bar .icon-nostand:before {\n  content: '\\E733';\n  font-size: 20px;\n}\n.left-say-bar .icon-none:before {\n  content: '-';\n  font-size: 20px;\n}\n@media screen and (max-width: 319px) {\nhtml {\n    font-size: 85.33px;\n}\n}\n@media screen and (min-width: 320px) and (max-width: 359px) {\nhtml {\n    font-size: 85.33px;\n}\n}\n@media screen and (min-width: 360px) and (max-width: 374px) {\nhtml {\n    font-size: 96px;\n}\n}\n@media screen and (min-width: 375px) and (max-width: 383px) {\nhtml {\n    font-size: 100px;\n}\n}\n@media screen and (min-width: 384px) and (max-width: 399px) {\nhtml {\n    font-size: 102.4px;\n}\n}\n@media screen and (min-width: 400px) and (max-width: 413px) {\nhtml {\n    font-size: 106.67px;\n}\n}\n@media all and (orientation: landscape) {\n.ul-item-grad li {\n    width: 25%;\n}\n.car-name {\n    padding-top: 4px;\n    font-size: 0.11rem;\n}\n.icon-logo {\n    margin-top: -90px;\n}\n.nav-wrap {\n    height: 44px;\n    background-color: #1b2024;\n    padding-top: 2px;\n}\n.nav-wrap .btn-wrap i {\n    display: block;\n    width: 40px;\n    height: 40px;\n    background-size: 40px 40px;\n    line-height: 40px;\n    font-size: 12px;\n}\n.box-book {\n    bottom: 44px;\n    padding: 10px;\n}\n.book-word-box {\n    padding-top: 0.4rem;\n}\n.book-word-box .tow-code-box {\n    width: .9rem;\n    height: .9rem;\n    position: absolute;\n    left: 0.5rem;\n}\n.book-word-box .tow-code-box .weixinhao {\n    position: absolute;\n    left: 0;\n    top: 100%;\n    line-height: 30px;\n    text-align: center;\n    display: block;\n    width: 100%;\n    color: #bb8c47;\n    font-size: 0.13rem;\n}\n.tel-phone {\n    width: 1.8rem;\n    height: .44rem;\n    margin-top: .3rem;\n    position: absolute;\n    left: 50%;\n}\n.tel-phone span {\n    line-height: .44rem;\n    font-size: 0.18rem;\n}\n.tel-phone em {\n    line-height: 0.5rem;\n}\n.car-names {\n    position: absolute;\n    left: 44%;\n    font-size: .22rem;\n    display: block;\n    width: 38%;\n    z-index: 10;\n    bottom: 100%;\n    top: -10px;\n}\n.car-title-img {\n    transform: translateY(-10%);\n}\n.book-title {\n    top: -2px;\n    font-size: 0.16rem;\n}\n.close-tier {\n    top: 10px;\n    right: 10px;\n    font-size: 0.3rem;\n}\n.color-box-bar,\n  .item-grade-wrap,\n  .mapbox {\n    bottom: 44px;\n}\n.color-box-bar .color-ul {\n    padding: 5px 10px;\n}\n.mapbox {\n    padding: 0.4rem 0.1rem 0;\n}\n.view-bar {\n    bottom: 50px;\n}\n.title-shop {\n    height: .32rem;\n    line-height: .32rem;\n    padding: 0 0.1rem;\n}\n.open {\n    width: .32rem;\n    height: .32rem;\n    font-size: .34rem;\n    line-height: .34rem;\n    left: .35rem;\n    top: 10px;\n}\n.b2 {\n    display: none;\n}\n.copyright {\n    bottom: 4px;\n}\n}\n@media all and (orientation: portrait) {\n.ul-item-grad li {\n    width: 50%;\n}\n.nav-wrap {\n    height: 66px;\n    background-color: #1b2024;\n    padding-top: 6px;\n}\n.nav-wrap .btn-wrap i {\n    display: block;\n    width: 54px;\n    height: 54px;\n    background-size: 54px 54px;\n    line-height: 52px;\n}\n.car-name {\n    padding-top: 40px;\n    font-size: 0.26rem;\n}\n.icon-logo {\n    margin-top: -160px;\n}\n.box-book {\n    bottom: 60px;\n    padding: 100px 10px 10px;\n}\n.book-word-box {\n    padding-top: 0.6rem;\n}\n.book-word-box .tow-code-box {\n    width: 1.5rem;\n    height: 1.5rem;\n    position: relative;\n    margin: auto;\n}\n.book-word-box .tow-code-box .weixinhao {\n    position: absolute;\n    left: 0;\n    top: 100%;\n    line-height: 30px;\n    text-align: center;\n    display: block;\n    width: 100%;\n    color: #bb8c47;\n    font-size: 0.16rem;\n}\n.tel-phone {\n    width: 2rem;\n    height: .4rem;\n    margin: 0.4rem auto auto;\n}\n.tel-phone span {\n    line-height: 0.4rem;\n}\n.tel-phone em {\n    line-height: 0.3rem;\n}\n.car-names {\n    position: absolute;\n    left: 10px;\n    font-size: .23rem;\n    display: block;\n    width: 34%;\n    z-index: 10;\n    bottom: 100%;\n}\n.color-box-bar,\n  .item-grade-wrap,\n  .mapbox,\n  .open {\n    bottom: 66px;\n}\n.car-title-img {\n    transform: translateY(-50%);\n}\n.close-tier {\n    z-index: 10;\n    top: 10px;\n    right: 10px;\n}\n.color-box-bar .color-ul {\n    padding: 5px 10px;\n}\n.mapbox {\n    padding: 0.6rem 0.1rem 0;\n}\n.mapbox .close-tier {\n    font-size: 0.3rem;\n}\n.mapbox .mpa-title {\n    font-size: .2rem;\n    line-height: 0.6rem;\n}\n.open,\n  .title-shop {\n    height: .4rem;\n    line-height: 0.4rem;\n}\n.title-shop {\n    font-size: .16rem;\n    padding: 0 .1rem;\n    margin-left: 0.2rem;\n}\n.open {\n    width: .4rem;\n    font-size: 0.4rem;\n}\n.b1 {\n    display: none;\n}\n.copyright {\n    bottom: 10px;\n}\n}\n.app {\n  position: fixed;\n  top: 0px;\n  left: 0px;\n  right: 0px;\n  bottom: 0px;\n}\n.wgc-shop-list {\n  width: 100%;\n}\n.wgc-shop-list .wgc-shop-item {\n  display: -webkit-box;\n  display: box;\n  display: flex;\n  padding: 10px;\n  position: relative;\n  border-bottom: #999 solid 1px;\n}\n.wgc-shop-list .wgc-shop-logo {\n  width: 110px;\n}\n.wgc-shop-list .wgc-shop-logo img {\n  width: 100px;\n  height: 60px;\n}\n.wgc-shop-page {\n  background-color: rgba(0, 0, 0, 0.6);\n  position: absolute;\n  top: 0px;\n  bottom: 0px;\n  left: 0px;\n  right: 0px;\n}\n", ""]);
+exports.push([module.i, "\nbody {\n  font-size: 0.12rem;\n  color: #fff;\n}\n@font-face {\n  font-family: 'ifont';\n  /* project id 253777 */\n  src: url('//at.alicdn.com/t/font_253777_bjzywii3uv8l4n29.eot');\n  src: url('//at.alicdn.com/t/font_253777_bjzywii3uv8l4n29.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_253777_bjzywii3uv8l4n29.woff') format('woff'), url('//at.alicdn.com/t/font_253777_bjzywii3uv8l4n29.ttf') format('truetype'), url('//at.alicdn.com/t/font_253777_bjzywii3uv8l4n29.svg#ifont') format('svg');\n}\n.icon,\ni,\n.ifont {\n  font-family: \"ifont\" !important;\n  font-style: normal;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.open {\n  display: block;\n  background-color: rgba(0, 0, 0, 0.6);\n  position: fixed;\n  z-index: 1001;\n  border-radius: 0.4rem;\n  -webkit-border-radius: 0.4rem;\n  -moz-border-radius: 0.4rem;\n  text-align: center;\n  left: 50%;\n  box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 4px;\n  transform: translate(-50%, 0);\n}\n.open:before {\n  content: '\\E72F';\n  color: #fff;\n}\n.open.active:before {\n  content: '\\E72E';\n  color: #aaa;\n}\n.close-tier {\n  position: absolute;\n  font-size: .36rem;\n  z-index: 10;\n}\n.close-tier:before {\n  content: '\\E6A9';\n}\n.complete {\n  padding-top: 4px;\n}\n.complete:before {\n  content: '\\E731';\n  font-size: 72px;\n  text-shadow: #ffef6b 0px 0px 3px;\n}\nhtml {\n  padding: 0;\n  margin: 0;\n  background-color: #99e0f8;\n  background-size: 100%;\n  height: 100%;\n  font-family: Helvetica, 'STHeiti STXihei', 'Microsoft JhengHei', 'Microsoft YaHei', Arial;\n  font-size: 110px;\n}\nbody {\n  font-size: 0.12rem;\n  color: #fff;\n}\n/* 公共*/\na,\nbody h1,\ndiv,\nh2,\nh3,\nh4,\nh5,\nh6,\nli,\nul,\ni {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n  font-style: normal;\n}\n@keyframes rotate {\n0% {\n    transform: rotate(0deg);\n    -webkit-transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n    -webkit-transform: rotate(360deg);\n}\n}\n/* Safari 和 Chrome */\n@-webkit-keyframes rotate {\n0% {\n    transform: rotate(0deg);\n    -webkit-transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n    -webkit-transform: rotate(360deg);\n}\n}\n@keyframes startLeft {\n0% {\n    -webkit-filter: blur(0px);\n    filter: blur(0px);\n}\n100% {\n    display: none;\n    left: -100%;\n}\n}\n/* Safari 和 Chrome */\n@-webkit-keyframes startLeft {\n0% {\n    -webkit-filter: blur(0px);\n    filter: blur(0px);\n}\n100% {\n    display: none;\n    left: -100%;\n}\n}\n@keyframes startRight {\n0% {\n    -webkit-filter: blur(0px);\n    filter: blur(0px);\n}\n100% {\n    display: none;\n    right: -100%;\n}\n}\n/* Safari 和 Chrome */\n@-webkit-keyframes startRight {\n0% {\n    -webkit-filter: blur(0px);\n    filter: blur(0px);\n}\n100% {\n    display: none;\n    right: -100%;\n}\n}\n.loading-box {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  overflow: hidden;\n  left: 0;\n  right: 0;\n  color: #fff;\n  background-color: #1b2024;\n  z-index: 9999;\n  text-align: center;\n  font-size: 30px;\n}\n.start-left {\n  animation: startLeft 600ms ease-in-out forwards;\n  -webkit-animation: startLeft 600ms ease-in-out forwards;\n}\n.start-right {\n  -webkit-animation: startRight 600ms ease-in-out forwards;\n}\n.box-out {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  z-index: 0;\n  right: 0;\n  left: 0;\n}\n.icon-logo {\n  position: absolute;\n  width: 200px;\n  height: 200px;\n  left: 50%;\n  top: 50%;\n  margin-left: -100px;\n  transform: scale(0.8, 0.8);\n  z-index: 20;\n}\n.left-cricle,\n.right-cricle {\n  width: 50%;\n  height: 100%;\n  float: left;\n  overflow: hidden;\n  position: relative;\n  box-sizing: border-box;\n}\n.cricle-line {\n  border: transparent solid 2px;\n  width: 180px;\n  height: 180px;\n  border-radius: 200px;\n  box-sizing: border-box;\n  position: absolute;\n  top: 10px;\n  /*下边阴影*/\n}\n.left-cricle .cricle-line {\n  border-left: #ff5600 solid 2px;\n  border-top: #ff5600 solid 2px;\n  left: 10px;\n  /*消失* -225  -45 */\n}\n.right-cricle .cricle-line {\n  border-right: #ff5600 solid 2px;\n  border-top: #ff5600 solid 2px;\n  position: absolute;\n  left: -90px;\n  /*消失* -135  45 */\n}\n.out-box-loading {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n}\n.cricle-indoor {\n  width: 100%;\n  height: 100%;\n  position: relative;\n  animation: rotate 6s linear infinite alternate;\n  -webkit-animation: rotate 6s linear infinite alternate;\n}\n.cricle-indoor .cricle-solid {\n  position: absolute;\n  width: 108px;\n  height: 108px;\n  background-color: #ff00f4;\n  left: 50%;\n  top: 50%;\n  margin-left: -54px;\n  margin-top: -54px;\n  background: -webkit-linear-gradient(-60deg, rgba(234, 80, 23, 0.9), rgba(255, 88, 0, 0.6));\n  background: linear-gradient(60deg, rgba(234, 80, 23, 0.9), rgba(255, 88, 0, 0.6));\n  border-radius: 100px;\n  z-index: 10;\n}\n.cricle-indoor .cricle-line {\n  position: absolute;\n  height: 120px;\n  width: 120px;\n  margin-left: -60px;\n  margin-top: -60px;\n  left: 50%;\n  top: 50%;\n  box-shadow: rgba(255, 249, 201, 0.4) 0 0 4px inset, rgba(255, 249, 201, 0.4) 0 0 4px;\n  border: #fd5306 solid 1.4px;\n  border-radius: 120px;\n  -webkit-border-radius: 120px;\n  -moz-border-radius: 120px;\n  box-sizing: border-box;\n  z-index: 1;\n  background-color: #1b2024;\n}\n.cricle-indoor .cricle-line2 {\n  position: absolute;\n  width: 144px;\n  height: 144px;\n  left: 50%;\n  top: 50%;\n  margin-left: -72px;\n  margin-top: -72px;\n  box-sizing: border-box;\n  transform: rotate(45deg);\n  border-radius: 150px;\n  -webkit-border-radius: 150px;\n  -moz-border-radius: 150px;\n  border: #fd5306 solid 1.4px;\n  border-top: transparent solid 1.4px;\n  box-shadow: rgba(255, 249, 201, 0.4) 0 0 4px inset, rgba(255, 249, 201, 0.4) 0 0 4px;\n  z-index: 0;\n}\n.cricle-indoor .cricle-piece {\n  width: 148px;\n  height: 148px;\n  box-sizing: border-box;\n  border: transparent solid 5px;\n  border-top: #fd5306 solid 5px;\n  left: 50%;\n  top: 50%;\n  margin-left: -74px;\n  margin-top: -74px;\n  position: absolute;\n  border-radius: 148px;\n  -webkit-border-radius: 148px;\n  -moz-border-radius: 148px;\n}\n.cricle-indoor .c1 {\n  transform: rotate(210deg);\n}\n.cricle-indoor .c2 {\n  transform: rotate(60deg);\n}\n.cricle-indoor .c3 {\n  transform: rotate(-10deg);\n}\n.cricle-indoor .black-box {\n  width: 30px;\n  height: 8px;\n  position: absolute;\n  background-color: #1b2024;\n  right: 55px;\n  top: 32px;\n  transform: rotate(28deg);\n}\n.cricle-indoor .cricle-dot {\n  background-color: #ff5600;\n  position: absolute;\n  box-shadow: rgba(255, 249, 201, 0.4) 0 0 4px;\n}\n.cricle-indoor .dot1 {\n  width: 12px;\n  height: 12px;\n  border-radius: 12px;\n  -webkit-border-radius: 12px;\n  -moz-border-radius: 12px;\n  left: 24px;\n  top: 80px;\n}\n.cricle-indoor .dot2 {\n  width: 6px;\n  height: 6px;\n  border-radius: 6px;\n  -webkit-border-radius: 6px;\n  -moz-border-radius: 6px;\n  left: 150px;\n  top: 145px;\n}\n.cricle-indoor .dot3 {\n  width: 6px;\n  height: 6px;\n  border-radius: 6px;\n  -webkit-border-radius: 6px;\n  -moz-border-radius: 6px;\n  left: 128px;\n  top: 33px;\n}\n.car-name {\n  text-align: center;\n  font-weight: normal;\n}\n.pot {\n  background-color: #ff5200;\n  position: absolute;\n  z-index: 1;\n  border-radius: 100%;\n  -webkit-border-radius: 100%;\n  -moz-border-radius: 100%;\n}\n.show-number {\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  transform: translate(-50%, -50%);\n  text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);\n  font-weight: normal;\n  font-size: 0.3rem;\n}\n.tips-click {\n  font-size: 0.2rem;\n  color: #aaa;\n  font-weight: normal;\n  display: block;\n}\n.left-box {\n  width: 50%;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  position: fixed;\n  overflow: hidden;\n  z-index: 1000;\n}\n.left-box .loading-box {\n  position: absolute;\n  width: 200%;\n}\n.right-box {\n  width: 50%;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  position: fixed;\n  overflow: hidden;\n  z-index: 1000;\n}\n.right-box .loading-box {\n  position: absolute;\n  width: 200%;\n  left: -100%;\n}\n.item-grade-wrap {\n  background-color: rgba(0, 0, 0, 0.6);\n  position: absolute;\n  left: 0;\n  right: 0;\n  box-sizing: border-box;\n  overflow: hidden;\n  padding-top: 20px;\n  z-index: 100;\n}\n.item-grade-wrap .close-tier {\n  font-size: 24px;\n}\n.item-grade-wrap .grade-title {\n  position: absolute;\n  text-align: center;\n  width: 100%;\n  top: 8px;\n  font-size: 14px;\n}\n.ul-item-grad {\n  font-size: 0;\n  padding: 10px;\n}\n.ul-item-grad .active .item-inwrap {\n  border-image: url(" + __webpack_require__(63) + ") 1 1 stretch;\n  -webkit-border-image: url(" + __webpack_require__(63) + ") 1 1 stretch;\n}\n.ul-item-grad li {\n  display: inline-block;\n  box-sizing: border-box;\n  font-size: 14px;\n  transform: skew(-10deg, 0deg);\n  padding: 4px 6px;\n}\n.ul-item-grad li .item-name {\n  text-align: center;\n  transform: skew(10deg, 0deg);\n  padding: 0;\n  margin: 0;\n  font-size: 0.12rem;\n}\n.ul-item-grad li .item-inwrap {\n  width: 100%;\n  box-sizing: border-box;\n  border: 1px solid transparent;\n  padding: 4px;\n}\n.ul-item-grad li .item-inwrap .img-box {\n  font-size: 0;\n  overflow: hidden;\n}\n.ul-item-grad li .item-inwrap .img-box img {\n  transform: skew(10deg, 0deg);\n  width: 110%;\n  transform: translateX(-5%);\n  width: 100%;\n}\n.nav-wrap {\n  right: 0;\n  left: 0;\n  bottom: 0;\n  position: absolute;\n  font-size: 0;\n  box-sizing: border-box;\n  z-index: 100;\n}\n.nav-wrap .btn-wrap {\n  width: 25%;\n  display: inline-block;\n  font-size: 0.14rem;\n}\n.nav-wrap .btn-wrap i {\n  background-image: url(" + __webpack_require__(340) + ");\n  background-repeat: no-repeat;\n  margin: auto;\n  text-align: center;\n}\n.nav-wrap .active i {\n  background-image: url(" + __webpack_require__(339) + ");\n  background-repeat: no-repeat;\n}\n.title-shop {\n  background-color: rgba(0, 0, 0, 0.6);\n  border-radius: 40px;\n  -webkit-border-radius: 40px;\n  -moz-border-radius: 40px;\n  position: fixed;\n  left: 50%;\n  display: block;\n  transform: translateX(-50%);\n  top: 10px;\n  box-sizing: border-box;\n  white-space: nowrap;\n  z-index: 100;\n}\n.box-book {\n  position: absolute;\n  left: 0;\n  top: 0;\n  right: 0;\n  z-index: 100;\n  background-color: rgba(0, 0, 0, 0.8);\n  box-sizing: border-box;\n}\n.box-book .book-content-box {\n  height: 100%;\n  width: 100%;\n  box-sizing: border-box;\n  position: relative;\n}\n.box-book .book-content-box .book-copyright {\n  bottom: 15px;\n  position: absolute;\n  right: 0px;\n  left: 0px;\n  text-align: center;\n  color: #aaa;\n}\n.box-book .book-content-box .book-bg {\n  background: none;\n  background-color: none;\n}\n.box-book .book-content-box .car-title-img {\n  position: absolute;\n  right: 0;\n  width: 50%;\n  max-width: 160px;\n}\n.box-book .book-content-box .book-word-box {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.box-book .book-content-box .book-word-box .tow-code-box {\n  background-color: rgba(143, 83, 55, 0.6);\n  border: #958571 solid 1px;\n  padding: 0.08rem;\n  box-sizing: border-box;\n}\n.box-book .book-content-box .book-word-box .tow-code-box img {\n  width: 100%;\n  height: 100%;\n}\n.tel-phone {\n  display: block;\n  position: relative;\n}\n.tel-phone span {\n  font-size: 0.2rem;\n  position: absolute;\n  display: block;\n  width: 100%;\n  text-align: center;\n  color: #fff;\n}\n.tel-phone em {\n  top: 100%;\n  display: block;\n  position: absolute;\n  color: #fff;\n  font-style: normal;\n  line-height: .rem;\n  text-align: center;\n  width: 100%;\n  color: #bb8c47;\n  font-size: 0.18rem;\n}\n.btn-canvas {\n  position: absolute;\n  z-index: 0;\n}\n.book-title {\n  position: absolute;\n  left: 20px;\n  font-size: 0.2rem;\n}\n.color-box-bar {\n  height: 0.5rem;\n  bottom: 66px;\n  position: absolute;\n  left: 0;\n  right: 0;\n  z-index: 100;\n}\n.color-box-bar .color-ul {\n  display: flex;\n  display: -webkit- flex;\n  flex-flow: row;\n  -webkit-flex: row;\n}\n.color-box-bar .color-ul .active {\n  border-image: url(" + __webpack_require__(63) + ") 1 1 stretch;\n  -webkit-border-image: url(" + __webpack_require__(63) + ") 1 1 stretch;\n}\n.color-box-bar .color-ul li {\n  height: 0.36rem;\n  flex: 1;\n  margin: 0px;\n  transform: skew(-12deg, 0deg);\n  padding: 3px;\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  border: transparent solid 1px;\n}\n.color-box-bar .color-ul li i {\n  display: block;\n  height: 100%;\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.color-box-bar .color-ul li i em {\n  display: block;\n  width: 100%;\n  height: 100%;\n  background: linear-gradient(0deg, rgba(0, 0, 0, 0.14), rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.14));\n}\n.red1 {\n  background-color: #d1322f;\n}\n.darkblue {\n  background-color: #2e4b5d;\n}\n.green {\n  background-color: #9ba640;\n}\n.gray1 {\n  background-color: #676b6a;\n}\n.gray2 {\n  background-color: #c0c0c0;\n}\n.view-bar {\n  width: 1.2rem;\n  background-color: rgba(68, 68, 68, 0.6);\n  padding: 10px;\n  border-radius: 30px;\n  -webkit-border-radius: 30px;\n  -moz-border-radius: 30px;\n  z-index: 100;\n  position: absolute;\n  overflow: hidden;\n  bottom: 80px;\n  left: 50%;\n  display: flex;\n  display: -webkit- flex;\n  flex-flow: row;\n  -webkit-flex: row;\n  transform: translate(-50%, 0);\n}\n.view-bar span {\n  flex: 1;\n  -webkit-flex: 1;\n  text-align: center;\n}\n.view-bar em {\n  position: absolute;\n  width: 54%;\n  background-color: rgba(68, 68, 68, 0.7);\n  height: 100%;\n  top: 0px;\n  left: 0px;\n  border-radius: 20px;\n  -webkit-border-radius: 20px;\n  -moz-border-radius: 20px;\n  z-index: -1;\n}\n.view-bar.active em {\n  left: 48%;\n}\n.hide {\n  display: none;\n}\n.mapbox {\n  position: absolute;\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  right: 0px;\n  left: 0px;\n  background-color: rgba(0, 0, 0, 0.6);\n  top: 0px;\n  z-index: 100;\n}\n.mapbox .close-tier {\n  font-size: .24rem;\n}\n.mpa-title {\n  line-height: .4rem;\n  text-align: center;\n  font-size: .18rem;\n  position: absolute;\n  top: 0px;\n  width: 100%;\n}\n.map-show-box {\n  height: 100%;\n}\n.map-show-box iframe {\n  border: none;\n}\n.fill-mode-FILL_WINDOW {\n  transform: translate3d(0, 0, 0);\n  -webkit-transform: translate3d(0, 0, 0);\n}\n.copyright {\n  position: fixed;\n  text-align: center;\n  color: #999;\n  z-index: 1000;\n  width: 100%;\n  left: 0px;\n  right: 0px;\n  font-size: .12rem;\n}\n.bgcolor-bar {\n  transform: rotate(90deg);\n  z-index: 300;\n  position: absolute;\n  width: 30px;\n  right: 0px;\n  background-color: #9ba640;\n}\n.bg-bar-clor {\n  position: absolute;\n  bottom: 80px;\n  top: 55px;\n  width: 14px;\n  right: 10px;\n  border: #eee solid 1px;\n  z-index: 1;\n}\n.bg-bar-clor .bg-item-clor {\n  height: 16.6666%;\n}\n.app {\n  position: fixed;\n  top: 0px;\n  left: 0px;\n  right: 0px;\n  bottom: 0px;\n}\n.wgc-shop-list {\n  width: 100%;\n}\n.wgc-shop-list .wgc-shop-item {\n  display: -webkit-box;\n  display: box;\n  display: flex;\n  padding: 10px;\n  position: relative;\n  border-bottom: #999 solid 1px;\n}\n.wgc-shop-list .wgc-shop-logo {\n  width: 110px;\n}\n.wgc-shop-list .wgc-shop-logo img {\n  width: 100px;\n  height: 60px;\n}\n.wgc-shop-page {\n  background-color: rgba(0, 0, 0, 0.6);\n  position: absolute;\n  top: 0px;\n  bottom: 0px;\n  left: 0px;\n  right: 0px;\n}\n.iscroll-wrapper {\n  position: absolute;\n  -ms-touch-action: none;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-text-size-adjust: none;\n  -moz-text-size-adjust: none;\n  -ms-text-size-adjust: none;\n  -o-text-size-adjust: none;\n  text-size-adjust: none;\n  top: 0px;\n  bottom: 44px;\n  left: 0px;\n  right: 0px;\n  background-color: #1b2024;\n  overflow: hidden;\n  z-index: 10;\n}\n.iscroll-wrapper .iscroller {\n  position: absolute;\n  /* Prevent elements to be highlighted on tap */\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n  /* Put the scroller into the HW Compositing layer right from the start */\n  -webkit-transform: translateZ(0);\n  -moz-transform: translateZ(0);\n  -ms-transform: translateZ(0);\n  -o-transform: translateZ(0);\n  transform: translateZ(0);\n}\n.iscroll-wrapper .scroll-say-bar {\n  position: fixed;\n  top: 84px;\n  left: 0px;\n  height: 30px;\n  border-bottom: #444 solid 1px;\n  width: 100%;\n  line-height: 30px;\n  padding: 0px 10px;\n  box-sizing: border-box;\n  background-color: #1b2024;\n}\n.iscroll-wrapper .scroll-say-bar .base-right {\n  float: right;\n}\n.iscroll-wrapper .scroll-say-bar .base-right .outer-radio {\n  display: block;\n  width: 20px;\n  height: 20px;\n  border: #e86004 solid 1px;\n  box-sizing: border-box;\n  margin-top: 4px;\n  border-radius: 20px;\n  -webkit-border-radius: 20px;\n  -moz-border-radius: 20px;\n  padding: 2px;\n  float: left;\n}\n.iscroll-wrapper .scroll-say-bar .base-right .outer-radio .inter-radio {\n  width: 14px;\n  height: 14px;\n  display: block;\n  border: #e86004 solid 1px;\n  border-radius: 12px;\n  -webkit-border-radius: 12px;\n  -moz-border-radius: 12px;\n  box-sizing: border-box;\n}\n.iscroll-wrapper .scroll-say-bar .base-right .left {\n  float: left;\n}\n.iscroll-wrapper .scroll-say-bar .base-right .left .inter-radio {\n  background-color: #e86004;\n}\n.iscroll-wrapper .scroll-say-bar .base-right .left span {\n  float: left;\n  padding-left: 5px;\n  padding-right: 10px;\n}\n.iscroll-wrapper .scroll-say-bar .base-right .right {\n  float: left;\n}\n.iscroll-wrapper .scroll-say-bar .base-right .right i {\n  color: #e86004;\n}\n.iscroll-wrapper .scroll-say-bar .base-right .right span {\n  padding-left: 5px;\n  padding-right: 10px;\n}\n.iscroll-wrapper .left-oper {\n  width: 96px;\n  text-align: center;\n  line-height: 24px;\n  height: 84px;\n  padding-top: 18px;\n  box-sizing: border-box;\n  border-bottom: #444 solid 1px;\n  position: fixed;\n  left: 0px;\n  top: 0px;\n  background-color: #1b2024;\n  border-right: #444 solid 1px;\n}\n.iscroll-wrapper .scroll-ul li {\n  float: left;\n  width: 100px;\n  height: 2000px;\n  list-style: none;\n  background-color: #eee;\n  margin: 5px;\n}\n.iscroll-wrapper .left-base {\n  position: absolute;\n  left: 0px;\n  color: #fff;\n  top: 83px;\n  width: 96px;\n  text-align: center;\n  background-color: #1b2024;\n  border-right: #444 solid 1px;\n}\n.iscroll-wrapper .left-base li {\n  border-bottom: #444 solid 1px;\n}\n.iscroll-title {\n  position: fixed;\n  min-width: 100%;\n  left: 0px;\n  top: 0px;\n  padding-left: 96px;\n  background-color: #1b2024;\n  width: 8000px;\n}\n.car-title {\n  float: left;\n}\n.car-title li {\n  float: left;\n  position: relative;\n  width: 120px;\n  box-sizing: border-box;\n  border-bottom: #444 solid 1px;\n  padding: 20px 5px 10px 5px;\n  height: 84px;\n  border-right: #444 solid 1px;\n}\n.car-title li i {\n  display: block;\n  width: 30px;\n  height: 30px;\n  position: absolute;\n  right: 0px;\n  top: 0px;\n  box-sizing: border-box;\n  border-left: rgba(0, 0, 0, 0) solid 15px;\n  border-bottom: rgba(0, 0, 0, 0) solid 15px;\n  border-right: #494d50 solid 15px;\n  border-top: #494d50 solid 15px;\n}\n.car-title li i:before {\n  content: '\\E606';\n  position: absolute;\n  top: -12px;\n  right: -15px;\n  font-size: 14px;\n}\n.parmsbox {\n  color: #fff;\n  font-size: 0px;\n  padding-top: 83px;\n  padding-left: 96px;\n}\n.paramitems {\n  display: inline-block;\n  width: 120px;\n  box-sizing: border-box;\n}\n.paramitems li {\n  border-bottom: #444 solid 1px;\n  font-size: .12rem;\n  text-align: center;\n}\n.paramitems .islike,\n.paramitems .litlike {\n  background-color: #1b2024;\n}\n.left-say-bar {\n  float: right;\n  text-align: right;\n}\n.left-say-bar em {\n  font-style: normal;\n  line-height: 30px;\n  position: relative;\n  padding-left: 20px;\n  margin-left: 10px;\n}\n.left-say-bar em i {\n  position: absolute;\n  left: 0px;\n  color: #e86004;\n}\n.left-say-bar .icon-stand:before {\n  content: '\\E734';\n  font-size: 20px;\n}\n.left-say-bar .icon-nostand:before {\n  content: '\\E733';\n  font-size: 20px;\n}\n.left-say-bar .icon-none:before {\n  content: '-';\n  font-size: 20px;\n}\n.normal-value {\n  height: 50px;\n  color: #fff;\n  overflow: hidden;\n  line-height: 50px;\n  border-right: #444 solid 1px;\n  -webkit-align-items: center;\n  align-items: center;\n  display: -webkit-flex;\n  display: flex;\n  text-align: center;\n  justify-content: center;\n  -webkit-box-align: center;\n  background-color: #362b24;\n}\n.left-base-item {\n  height: 50px;\n  -webkit-align-items: center;\n  align-items: center;\n  display: -webkit-flex;\n  display: flex;\n  text-align: center;\n  justify-content: center;\n  -webkit-box-align: center;\n}\n.left-base-title {\n  position: relative;\n  height: 30px;\n  line-height: 30px;\n}\n.left-base-title .left-say-bar {\n  position: absolute;\n  left: 96px;\n  top: 0px;\n  min-width: 250%;\n  background-color: #1b2024;\n  height: 30px;\n}\n.none-value {\n  height: 30px;\n}\n.likehide .litlike,\n.likehide .islike {\n  display: none;\n}\n@media screen and (max-width: 319px) {\nhtml {\n    font-size: 85.33333px;\n}\n}\n@media screen and (min-width: 320px) and (max-width: 359px) {\nhtml {\n    font-size: 85.33333px;\n}\n}\n@media screen and (min-width: 360px) and (max-width: 374px) {\nhtml {\n    font-size: 96px;\n}\n}\n@media screen and (min-width: 375px) and (max-width: 383px) {\nhtml {\n    font-size: 100px;\n}\n}\n@media screen and (min-width: 384px) and (max-width: 399px) {\nhtml {\n    font-size: 102.4px;\n}\n}\n@media screen and (min-width: 400px) and (max-width: 413px) {\nhtml {\n    font-size: 106.66667px;\n}\n}\n@media all and (orientation: landscape) {\n.ul-item-grad li {\n    width: 25%;\n}\n.car-name {\n    padding-top: 4px;\n    font-size: .11rem;\n}\n.icon-logo {\n    margin-top: -90px;\n}\n.nav-wrap {\n    height: 44px;\n    background-color: #1b2024;\n    padding-top: 2px;\n}\n.nav-wrap .btn-wrap i {\n    display: block;\n    width: 40px;\n    height: 40px;\n    background-size: 40px 40px;\n    line-height: 40px;\n    font-size: 12px;\n}\n.box-book {\n    bottom: 44px;\n    padding: 10px;\n}\n.book-word-box {\n    padding-top: 0.4rem;\n}\n.book-word-box .tow-code-box {\n    width: .9rem;\n    height: .9rem;\n    position: absolute;\n    left: 0.5rem;\n}\n.book-word-box .tow-code-box .weixinhao {\n    position: absolute;\n    left: 0;\n    top: 100%;\n    line-height: 30px;\n    text-align: center;\n    display: block;\n    width: 100%;\n    color: #bb8c47;\n    font-size: 0.13rem;\n}\n.tel-phone {\n    width: 1.8rem;\n    height: 0.44rem;\n    margin-top: 0.3rem;\n    position: absolute;\n    left: 50%;\n}\n.tel-phone span {\n    line-height: 0.44rem;\n    font-size: 0.18rem;\n}\n.tel-phone em {\n    line-height: 0.5rem;\n}\n.car-names {\n    position: absolute;\n    left: 44%;\n    font-size: 0.22rem;\n    display: block;\n    width: 38%;\n    z-index: 10;\n    bottom: 100%;\n    top: -10px;\n}\n.car-title-img {\n    transform: translateY(-10%);\n}\n.book-title {\n    top: -2px;\n    font-size: 0.16rem;\n}\n.close-tier {\n    top: 10px;\n    right: 10px;\n    font-size: 0.3rem;\n}\n.item-grade-wrap,\n  .mapbox {\n    bottom: 44px;\n}\n.color-box-bar {\n    bottom: 44px;\n}\n.color-box-bar .color-ul {\n    padding: 5px 10px;\n}\n.mapbox {\n    padding: .4rem .1rem 0rem .1rem;\n}\n.view-bar {\n    bottom: 50px;\n}\n.title-shop {\n    height: .32rem;\n    line-height: .32rem;\n    padding: 0px .1rem;\n}\n.open {\n    width: .32rem;\n    height: .32rem;\n    font-size: .34rem;\n    line-height: .34rem;\n    left: 0.35rem;\n    top: 10px;\n}\n.b2 {\n    display: none;\n}\n.copyright {\n    bottom: 4px;\n}\n}\n@media all and (orientation: portrait) {\n.ul-item-grad li {\n    width: 50%;\n}\n.nav-wrap {\n    height: 66px;\n    background-color: #1b2024;\n    padding-top: 6px;\n}\n.nav-wrap .btn-wrap i {\n    display: block;\n    width: 54px;\n    height: 54px;\n    background-size: 54px 54px;\n    line-height: 52px;\n}\n.car-name {\n    padding-top: 40px;\n    font-size: .26rem;\n}\n.icon-logo {\n    margin-top: -160px;\n}\n.box-book {\n    bottom: 60px;\n    padding: 100px 10px 10px;\n}\n.book-word-box {\n    padding-top: 0.6rem;\n}\n.book-word-box .tow-code-box {\n    width: 1.5rem;\n    height: 1.5rem;\n    position: relative;\n    margin: auto;\n}\n.book-word-box .tow-code-box .weixinhao {\n    position: absolute;\n    left: 0;\n    top: 100%;\n    line-height: 30px;\n    text-align: center;\n    display: block;\n    width: 100%;\n    color: #bb8c47;\n    font-size: 0.16rem;\n}\n.tel-phone {\n    width: 2rem;\n    height: 0.4rem;\n    margin: 0.4rem auto auto;\n}\n.tel-phone span {\n    line-height: 0.4rem;\n}\n.tel-phone em {\n    line-height: 0.3rem;\n}\n.car-names {\n    position: absolute;\n    left: 10px;\n    font-size: 0.23rem;\n    display: block;\n    width: 34%;\n    z-index: 10;\n    bottom: 100%;\n}\n.car-title-img {\n    transform: translateY(-50%);\n}\n.close-tier {\n    z-index: 10;\n    top: 10px;\n    right: 10px;\n}\n.item-grade-wrap,\n  .mapbox {\n    bottom: 66px;\n}\n.color-box-bar {\n    bottom: 66px;\n}\n.color-box-bar .color-ul {\n    padding: 5px 10px;\n}\n.mapbox {\n    padding: .6rem .1rem 0rem .1rem;\n}\n.mapbox .close-tier {\n    font-size: .3rem;\n}\n.mapbox .mpa-title {\n    font-size: .2rem;\n    line-height: .6rem;\n}\n.title-shop {\n    height: .4rem;\n    line-height: .4rem;\n    font-size: 0.16rem;\n    padding: 0px .1rem;\n    margin-left: .2rem;\n}\n.open {\n    width: .4rem;\n    height: .4rem;\n    line-height: .4rem;\n    font-size: .4rem;\n}\n.open {\n    bottom: 66px;\n}\n.b1 {\n    display: none;\n}\n.copyright {\n    bottom: 10px;\n}\n}\n", ""]);
 
 // exports
 
@@ -1588,7 +1637,17 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("vuk-car")
+      _c("vuk-car", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.nav == "deploy",
+            expression: "nav=='deploy'"
+          }
+        ],
+        ref: "car"
+      })
     ],
     1
   )
@@ -1747,101 +1806,156 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "iscroll-wrapper", attrs: { id: _vm.id } }, [
-    _c("div", { staticClass: "iscroller" }, [
+  return _c(
+    "div",
+    {
+      staticClass: "iscroll-wrapper",
+      class: {
+        likehide: _vm.param.length <= 1 ? false : _vm.hide ? true : false
+      },
+      attrs: { id: _vm.id }
+    },
+    [
+      _c("div", { staticClass: "iscroller", attrs: { id: _vm.id + "in" } }, [
+        _c(
+          "div",
+          {
+            staticClass: "iscroll-content",
+            style: { width: 120 * _vm.param.length + 96 + "px" }
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "parmsbox" },
+              _vm._l(_vm.param, function(item, index) {
+                return _c(
+                  "ul",
+                  { staticClass: "paramitems" },
+                  [
+                    _vm._l(item, function(p, i) {
+                      return [
+                        _c("li", {
+                          staticClass: "none-value",
+                          class: { islike: p.dislike },
+                          domProps: { innerHTML: _vm._s(p.name) }
+                        }),
+                        _vm._v(" "),
+                        _vm._l(p.data, function(a, d) {
+                          return _c("li", {
+                            staticClass: "normal-value",
+                            class: { islike: p.dislike, litlike: a.dislike },
+                            domProps: { innerHTML: _vm._s(a.name) }
+                          })
+                        })
+                      ]
+                    })
+                  ],
+                  2
+                )
+              })
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "left-base",
+                style: { transform: "translate(" + -_vm.titlePos + "px,0px)" }
+              },
+              [
+                _c(
+                  "ul",
+                  { staticClass: "left-base-nav" },
+                  [
+                    _vm._l(_vm.leftTitle, function(item, index) {
+                      return [
+                        _c(
+                          "li",
+                          {
+                            staticClass: "left-base-title",
+                            class: { islike: item.dislike }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(item.name) +
+                                "\n                        "
+                            ),
+                            _vm._m(0, true)
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _vm._l(item.data, function(p, i) {
+                          return _c(
+                            "li",
+                            {
+                              staticClass: "left-base-item",
+                              class: {
+                                islike: item.dislike,
+                                litlike: p.dislike
+                              }
+                            },
+                            [_vm._v(_vm._s(p.name))]
+                          )
+                        })
+                      ]
+                    })
+                  ],
+                  2
+                )
+              ]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "clear" })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "scroll-say-bar" }, [
+        _vm._v(_vm._s(_vm.tip) + "\n        "),
+        _vm._m(1)
+      ]),
+      _vm._v(" "),
       _c(
         "div",
-        { staticClass: "iscroll-content", staticStyle: { width: "456px" } },
+        {
+          staticClass: "iscroll-title",
+          style: { transform: "translate(" + _vm.titlePos + "px,0px)" }
+        },
         [
           _c(
-            "div",
-            { staticClass: "parmsbox" },
-            _vm._l(_vm.param, function(item, index) {
-              return _c(
-                "ul",
-                { staticClass: "paramitems" },
-                [
-                  _vm._l(item, function(p, i) {
-                    return [
-                      _c("li", {
-                        staticClass: "none-value",
-                        class: { islike: p.dislike },
-                        domProps: { innerHTML: _vm._s(p.name) }
-                      }),
-                      _vm._v(" "),
-                      _vm._l(p.data, function(a, d) {
-                        return _c("li", {
-                          staticClass: "normal-value",
-                          class: { islike: p.dislike, litlike: a.dislike },
-                          domProps: { innerHTML: _vm._s(a.name) }
-                        })
-                      })
-                    ]
-                  })
-                ],
-                2
-              )
+            "ul",
+            { staticClass: "car-title" },
+            _vm._l(_vm.showtitle, function(item, index) {
+              return _c("li", { staticClass: "item-car-title" }, [
+                _c("i", {
+                  on: {
+                    click: function($event) {
+                      _vm.del(index)
+                    }
+                  }
+                }),
+                _vm._v(_vm._s(item.name.value))
+              ])
             })
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "left-base",
-              style: { transform: "translate(" + -_vm.titlePos + "px,0px)" }
-            },
-            [
-              _c(
-                "ul",
-                { staticClass: "left-base-nav" },
-                [
-                  _vm._l(_vm.leftTitle, function(item, index) {
-                    return [
-                      _c("li", { staticClass: "left-base-title" }, [
-                        _vm._v("\n        " + _vm._s(item.name) + "\n        "),
-                        _vm._m(0, true)
-                      ]),
-                      _vm._v(" "),
-                      _vm._l(item.data, function(p, i) {
-                        return _c("li", { staticClass: "left-base-item" }, [
-                          _vm._v(_vm._s(p.name))
-                        ])
-                      })
-                    ]
-                  })
-                ],
-                2
-              )
-            ]
           )
         ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "left-oper",
+          class: { active: _vm.hide },
+          on: {
+            click: function($event) {
+              _vm.hide = !_vm.hide
+            }
+          }
+        },
+        [_vm._v("\n        隐藏"), _c("br"), _vm._v(" 相同项\n    ")]
       )
-    ]),
-    _vm._v(" "),
-    _vm._m(1),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "iscroll-title",
-        style: { transform: "translate(" + _vm.titlePos + "px,0px)" }
-      },
-      [
-        _c(
-          "ul",
-          { staticClass: "car-title" },
-          _vm._l(_vm.showtitle, function(item, index) {
-            return _c("li", { staticClass: "item-car-title" }, [
-              _c("i"),
-              _vm._v(_vm._s(item.name.value))
-            ])
-          })
-        )
-      ]
-    ),
-    _vm._v(" "),
-    _vm._m(2)
-  ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -1860,23 +1974,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "scroll-say-bar" }, [
-      _vm._v("基本参数\n            "),
-      _c("div", { staticClass: "left-say-bar" }, [
-        _c("em", [_c("i", { staticClass: "icon-stand" }), _vm._v("标配")]),
-        _c("em", [_c("i", { staticClass: "icon-nostand" }), _vm._v("选配")]),
-        _c("em", [_c("i", { staticClass: "icon-none" }), _vm._v("无")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "left-oper active" }, [
-      _vm._v("\n            隐藏"),
-      _c("br"),
-      _vm._v(" 相同项\n        ")
+    return _c("div", { staticClass: "left-say-bar" }, [
+      _c("em", [_c("i", { staticClass: "icon-stand" }), _vm._v("标配")]),
+      _c("em", [_c("i", { staticClass: "icon-nostand" }), _vm._v("选配")]),
+      _c("em", [_c("i", { staticClass: "icon-none" }), _vm._v("无")])
     ])
   }
 ]

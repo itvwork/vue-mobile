@@ -1,0 +1,106 @@
+body {
+    font-size: 0.12rem;
+    color: #fff;
+}
+
+@white: #fff;
+@blackRgba: rgba(0, 0, 0, 0.6);
+@carred: rgba(226, 0, 0, 1);
+@carwhite: rgba(221, 221, 211, 1);
+@carblue: rgba(0, 109, 231, 1);
+@cargray: rgba(100, 100, 100, 100);
+@carblack: rgba(0, 0, 0, 1);
+@bg: #1b2024;
+.boxsize(@a: border-box) {
+    -webkit-box-sizing: @a;
+    -moz-box-sizing: @a;
+    box-sizing: @a;
+}
+
+.bgcolor(@r: 0, @a: 0.6, @b: 0, @g: 0) {
+    background-color: rgba(@r, @g, @b, @a);
+}
+
+.r(@radius: 1rem) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+}
+
+.display(@flex: flex, @row: row) {
+    display: @flex;
+    display: -webkit-@flex;
+    flex-flow: @row;
+    -webkit-flex: @row;
+}
+
+.antinit(@p, @rid) {
+    left: @p;
+    right: @p;
+    top: @p;
+    bottom: @p;
+    -webkit-border-radius: @rid;
+    border-radius: @rid;
+    display: block;
+}
+
+.border(@a: 1px, @b: solid, @c: 1, @d: 255, @e: 255, @f: 255) {
+    border: rgba(@d, @e, @f, @c) @b @a;
+}
+
+.flex(@a: 1) {
+    flex: @a;
+    -webkit-flex: @a;
+}
+
+.round(@a: 0.1rem) {
+    left: @a;
+    right: @a;
+}
+
+.text-over(@row) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: @row;
+    -webkit-box-orient: vertical;
+}
+
+.border-radius(@a, @b) when(@a=0) {
+    border-radius: @b;
+    -webkit-border-radius: @b;
+    -moz-border-radius: @b
+}
+
+.border-radius(@a, @b) when(@a=1) {
+    border-top-left-radius: @b;
+    -webkit-border-top-left-radius: @b;
+    -moz-border-top-left-radius: @b;
+}
+
+.border-radius(@a, @b) when(@a=2) {
+    border-top-right-radius: @b;
+    -webkit-border-top-right-radius: @b;
+    -moz-border-top-right-radius: @b;
+}
+
+.border-radius(@a, @b) when(@a=3) {
+    border-bottom-right-radius: @b;
+    -webkit-border-bottom-right-radius: @b;
+    -moz-border-bottom-right-radius: @b
+}
+
+.border-radius(@a, @b) when(@a=4) {
+    border-bottom-left-radius: @b;
+    -webkit-border-bottom-left-radius: @b;
+    -moz-border-bottom-left-radius: @b
+}
+
+.rotate(@a) {
+    transform: rotate(@a);
+    -webkit-transform: rotate(@a);
+}
+
+.translate(@a: 0, @b: 0) {
+    transform: translate(@a, @b);
+}

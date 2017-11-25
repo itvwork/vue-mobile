@@ -45,6 +45,7 @@
     mounted: function() {
       let self = this;
       this.start();
+      this.scroll.destroy();
       // setTimeout(()=>{
       //   self.scroll.destroy()
       // },3000);

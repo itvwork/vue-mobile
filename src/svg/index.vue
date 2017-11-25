@@ -1,5 +1,5 @@
 <style lang="less">
-  @import "./index.less";
+@import "./less/main.less";
 </style>
 
 <template lang="html">
@@ -71,7 +71,9 @@
    
     </div>
 
-    <vuk-car></vuk-car>
+  
+    <vuk-car ref="car" v-show="nav=='deploy'"></vuk-car>
+    </div>
    
   </section>
 </template>
@@ -79,134 +81,147 @@
 <script>
 import VukScroll from "../components/VukScroll";
 import VukCar from "../components/VukCar";
-  export default {
-    data() {
-      return {
-        nav: false,
-        pro: products,
-        shop:[{
-          title:'中华店',
-          addr:'广州市中华路203',
-          src:'./style/mobile/css/img/after.jpg',
-          distance:'20km'
+export default {
+  data() {
+    return {
+      nav: false,
+      pro: products,
+      shop: [
+        {
+          title: "中华店",
+          addr: "广州市中华路203",
+          src: "./style/mobile/css/img/after.jpg",
+          distance: "20km"
         },
         {
-          title:'中华店',
-          addr:'广州市中华路203',
-          src:'./style/mobile/css/img/after.jpg',
-          distance:'20km'
+          title: "中华店",
+          addr: "广州市中华路203",
+          src: "./style/mobile/css/img/after.jpg",
+          distance: "20km"
         },
         {
-          title:'中华店',
-          addr:'广州市中华路203',
-          src:'./style/mobile/css/img/after.jpg',
-          distance:'20km'
+          title: "中华店",
+          addr: "广州市中华路203",
+          src: "./style/mobile/css/img/after.jpg",
+          distance: "20km"
         },
         {
-          title:'中华店',
-          addr:'广州市中华路203',
-          src:'./style/mobile/css/img/after.jpg',
-          distance:'20km'
+          title: "中华店",
+          addr: "广州市中华路203",
+          src: "./style/mobile/css/img/after.jpg",
+          distance: "20km"
         },
         {
-          title:'中华店',
-          addr:'广州市中华路203',
-          src:'./style/mobile/css/img/after.jpg',
-          distance:'20km'
-        },{
-          title:'中华店',
-          addr:'广州市中华路203',
-          src:'./style/mobile/css/img/after.jpg',
-          distance:'20km'
+          title: "中华店",
+          addr: "广州市中华路203",
+          src: "./style/mobile/css/img/after.jpg",
+          distance: "20km"
+        },
+        {
+          title: "中华店",
+          addr: "广州市中华路203",
+          src: "./style/mobile/css/img/after.jpg",
+          distance: "20km"
+        },
+        {
+          title: "中华店",
+          addr: "广州市中华路203",
+          src: "./style/mobile/css/img/after.jpg",
+          distance: "20km"
+        },
+        {
+          title: "中华店",
+          addr: "广州市中华路203",
+          src: "./style/mobile/css/img/after.jpg",
+          distance: "20km"
+        },
+        {
+          title: "中华店",
+          addr: "广州市中华路203",
+          src: "./style/mobile/css/img/after.jpg",
+          distance: "20km"
+        },
+        {
+          title: "中华店",
+          addr: "广州市中华路203",
+          src: "./style/mobile/css/img/after.jpg",
+          distance: "20km"
+        },
+        {
+          title: "中华店",
+          addr: "广州市中华路203",
+          src: "./style/mobile/css/img/after.jpg",
+          distance: "20km"
+        },
+        {
+          title: "中华店",
+          addr: "广州市中华路203",
+          src: "./style/mobile/css/img/after.jpg",
+          distance: "20km"
+        },
+        {
+          title: "中华店",
+          addr: "广州市中华路203",
+          src: "./style/mobile/css/img/after.jpg",
+          distance: "20km"
         }
-        ,{
-          title:'中华店',
-          addr:'广州市中华路203',
-          src:'./style/mobile/css/img/after.jpg',
-          distance:'20km'
-        }
-        ,{
-          title:'中华店',
-          addr:'广州市中华路203',
-          src:'./style/mobile/css/img/after.jpg',
-          distance:'20km'
-        }
-        ,{
-          title:'中华店',
-          addr:'广州市中华路203',
-          src:'./style/mobile/css/img/after.jpg',
-          distance:'20km'
-        }
-        ,{
-          title:'中华店',
-          addr:'广州市中华路203',
-          src:'./style/mobile/css/img/after.jpg',
-          distance:'20km'
-        }
-        ,{
-          title:'中华店',
-          addr:'广州市中华路203',
-          src:'./style/mobile/css/img/after.jpg',
-          distance:'20km'
-        }
-        ,{
-          title:'中华店',
-          addr:'广州市中华路203',
-          src:'./style/mobile/css/img/after.jpg',
-          distance:'20km'
-        }
-        ,{
-          title:'中华店',
-          addr:'广州市中华路203',
-          src:'./style/mobile/css/img/after.jpg',
-          distance:'20km'
-        }
-        ],
-        scroll:'',
-        once:0,
-      };
-    },
-    components: {
-        VukScroll,VukCar
-     },
-    created() {
+      ],
+      scroll: "",
+      once: 0
+    };
+  },
+  components: {
+    VukScroll,
+    VukCar
+  },
+  created() {},
+  mounted() {
+    let self = this;
 
-    },
-    mounted(){
-      let self=this;
+    // 店铺
 
-      // 店铺
+    this.scroll = this.$refs.shop.scroll;
+    this.car = this.$refs.car.scroll;
+    this.scroll.destroy();
+    this.scroll.on("pulldown", function() {
+      //  setTimeout(function(){
+      //    self.scroll.scrollTo(0,0,200);
+      //  },400)
+    });
 
-        this.scroll=this.$refs.shop.scroll;
+    this.scroll.on("pullup", function() {
+      //  setTimeout(function(){
+      //    self.scroll.scrollTo(0,self.scroll.maxScrollY,200);
+      //  },400)
+    });
+    
+  },
+  methods: {
+    changeNav(nav) {
+      let self = this;
+      nav == this.nav ? (this.nav = false) : (this.nav = nav);
+
+      if (this.nav == false && nav == "book") {
         this.scroll.destroy();
-        this.scroll.on('pulldown',function(){
-          console.log('pulldown');
-            //  setTimeout(function(){
-            //    self.scroll.scrollTo(0,0,200);
-            //  },400)
-        })
+      }
+      if (this.nav == "book") {
+        this.scroll._init();
+      }
 
-         this.scroll.on('pullup',function(){
-            console.log('pullup');
-           
-            //  setTimeout(function(){
-            //    self.scroll.scrollTo(0,self.scroll.maxScrollY,200);
-            //  },400)
-        })
+      if (this.nav == false && nav == "deploy") {
+        
+         this.car.destroy();
+      }
+      if (this.nav == "deploy") {
 
-    },
-    methods: {
-      changeNav(nav) {
-        nav == this.nav ? (this.nav = false) : (this.nav = nav);
-
-        if(this.nav==false && nav=="book"){
-            this.scroll.destroy();
-        }
-        if(this.nav=='book'){
-            this.scroll._init();
-        }
-
+        this.$refs.car.restart();
+        this.car._init();
+     
+     
+       
       }
     }
-  };
+    
+  }
+};
 </script>

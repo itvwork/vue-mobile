@@ -1,6 +1,4 @@
-<style lang="less">
-  @import './svg/index.less';
-</style>
+
 <template lang="html">
       <section m class="app-main-wrap">
         <div class="color-box-bar">
