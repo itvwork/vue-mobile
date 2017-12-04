@@ -16,7 +16,7 @@
                     <template v-for="(item,index) in leftTitle">
                         <li class="left-base-title" :class="{islike:item.dislike}">
                             {{item.name}}
-                            <div class="left-say-bar">
+                            <div class="left-say-bar" :style="{width:leftbar+'px'}">
                                 <em><i class="icon-stand"></i>标配</em>
                                 <em><i class="icon-nostand"></i>选配</em>
                                 <em><i class="icon-none"></i>无</em>
@@ -30,7 +30,7 @@
             <div class="clear"></div>
         </div>
         <div class="scroll-say-bar">{{tip}}
-            <div class="left-say-bar"><em><i class="icon-stand"></i>标配</em><em><i class="icon-nostand"></i>选配</em><em><i class="icon-none"></i>无</em></div>
+            <div class="left-say-bar" :style="{width:leftbar+'px'}"><em><i class="icon-stand"></i>标配</em><em><i class="icon-nostand"></i>选配</em><em><i class="icon-none"></i>无</em></div>
         </div>
         <div class="iscroll-title" :style="{transform: 'translate('+titlePos+'px,0px)'}">
             <ul class="car-title">
@@ -58,9 +58,10 @@ export default {
       leftTitle: [],
       param: [],
       hide: false,
+      leftbar:'',
       begin: {
          showtitle: [],
-       leftTitle: [],
+         leftTitle: [],
       },
       tip: "基本参数"
     };
@@ -72,6 +73,11 @@ export default {
     let self = this;
     this.start();
      this.scroll.destroy();
+     this.leftbarfun();
+     window.addEventListener('resize',function(){
+       self.leftbarfun();
+     })
+     
   },
   updated() {
     this.scroll.refresh();
@@ -80,6 +86,10 @@ export default {
   },
 
   methods: {
+    leftbarfun(){
+      
+      this.leftbar=document.body.offsetWidth-96;
+    },
     restart() {
       this.showtitle = JSON.parse(JSON.stringify(this.begin.showtitle));
       this.param = JSON.parse(JSON.stringify(this.begin.param));
@@ -92,11 +102,13 @@ export default {
         "http://h53d.3dwgc.com/model/getContent",
         {
           data: {
-            id: 2
+            id: 7
           }
         }
       );
+      
       let res = JSON.parse(data.data.content);
+     console.log(res);
       this.name(res);
       this.like();
       this.leftnav();

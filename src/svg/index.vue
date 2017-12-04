@@ -12,7 +12,7 @@
           <svg viewBox="0 0 100 100">   
                    <path d="M 50,50 m 0,-47.5
                 a 47.5,47.5 0 1 1 0,95
-                a 47.5,47.5 0 1 1 0,-95"  stroke="#fd5306" stroke-width="0.5" fill-opacity="0" style="stroke-dasharray: 298.451px, 298.451px; stroke-dashoffset: 0px; "></path>
+                a 47.5,47.5 0 1 1 0,-95"  stroke="#fd5306" stroke-width="0.5" fill-opacity="0" :style="{'stroke-dashoffset':cri+'px'}" style="stroke-dasharray: 298.451px, 298.451px;"></path>
                 </svg>
           <div class="turn-box">
             <svg viewBox="0 0 100 100" class="circle1 c0">   
@@ -50,7 +50,7 @@
           <svg viewBox="0 0 100 100" class="circle2 ">   
                    <path d="M 50,50 m 0,-47.5
                 a 47.5,47.5 0 1 1 0,95
-                a 47.5,47.5 0 1 1 0,-95"  stroke="#fd5306" stroke-linecap="round" stroke-width="1" fill-opacity="0" style="stroke-dasharray: 298.451px, 298.451px; stroke-dashoffset: 0px; transition: stroke-dashoffset 0.6s ease 0s, stroke 0.6s ease;"></path>
+                a 47.5,47.5 0 1 1 0,-95"  stroke="#fd5306" stroke-linecap="round" stroke-width="1" fill-opacity="0"   style="stroke-dasharray: 298.451px, 298.451px;"></path>
                 </svg>
           <svg viewBox="0 0 100 100" class="circle3">   
                 </svg>
@@ -66,7 +66,7 @@
           <svg viewBox="0 0 100 100">   
                  <path d="M 50,50 m 0,-47.5
               a 47.5,47.5 0 1 1 0,95
-              a 47.5,47.5 0 1 1 0,-95"  stroke="#fd5306" stroke-width="0.5" fill-opacity="0" style="stroke-dasharray: 298.451px, 298.451px; stroke-dashoffset: 0px; transition: stroke-dashoffset 0.6s ease 0s, stroke 0.6s ease;"></path>
+              a 47.5,47.5 0 1 1 0,-95"  stroke="#fd5306" stroke-width="0.5" fill-opacity="0"  :style="{'stroke-dashoffset':cri+'px'}" style="stroke-dasharray: 298.451px, 298.451px; "></path>
               </svg>
           <div class="turn-box">
             <svg viewBox="0 0 100 100" class="circle1 c0">   
@@ -129,12 +129,13 @@
     <!-- 颜色更换 -->
     <div class="color-box-bar" v-show="nav=='color'">
       <ul class="color-ul">
-        <li class="color " @click="color(146,13,13)" ><i class="red1"><em></em></i></li>
+          <li class="color" :class="{active:colors.default==index}" v-for="(item,index) in colors.data" @click="color(item.r,item.g,item.b,index)" ><i :style="{'background-color':'rgba('+item.r+','+item.g+','+item.b+',1)'}"><em></em></i></li>
+        <!-- <li class="color " @click="color(146,13,13)" ><i class="red1"><em></em></i></li>
         <li class="color" @click="color(20,33,28)"  ><i style="background-color:#234035"><em></em></i></li>
         <li class="color" @click="color(155,150,46)" ><i class="green"><em></em></i></li>
         <li class="color" @click="color(69,36,1)"  data-r="69" data-g="36" data-b="1"><i style="background-color:#452401;"><em></em></i></li>
         <li class="color" @click="color(22,22,22)"  data-r="22" data-g="22" data-b="22"><i style="background-color:#161616;"><em></em></i></li>
-        <li class="color" @click="color(251,250,239)"  ><i style="background-color:#fbfaef"><em></em></i></li>
+        <li class="color" @click="color(251,250,239)"  ><i style="background-color:#fbfaef"><em></em></i></li> -->
       </ul>
     </div>
     <!-- 菜单 -->
@@ -169,14 +170,14 @@
       </vuk-scroll>
       <!-- 配置 -->
     </div>
-    <!-- <vuk-car ref="car" v-show="nav=='deploy'"></vuk-car> -->
+    <vuk-car ref="car" v-show="nav=='deploy'"></vuk-car>
     </div>
   </section>
 </template>
 
 <script>
   import VukScroll from "../components/VukScroll";
-  // import VukCar from "../components/VukCar";
+  import VukCar from "../components/VukCar";
   export default {
     data() {
       return {
@@ -186,6 +187,8 @@
         open: false,
         persent:0,
         cn:'gj',
+        cri:298.451, 
+        colors:carColor,
         shop: [{
             title: "中华店",
             addr: "广州市中华路203",
@@ -271,7 +274,7 @@
     },
     components: {
       VukScroll,
-      // VukCar
+       VukCar
     },
     created() {
       this.share();
@@ -322,8 +325,9 @@
         }
           
       },
-      color(r,g,b){
-          changeColor(r,g,b)
+      color(r,g,b,index){
+          changeColor(r,g,b);
+          this.colors.default=index;
       },
       opens(){
         if(this.complete==true){
@@ -350,9 +354,9 @@
           // 在这里调用 API
           //朋友圈
           wx.onMenuShareTimeline({
-            title: '全新本田CR-V 3D试驾', // 分享标题
-            link: shareurl, // 分享链接
-            imgUrl: 'https://www.gdcycj.com/car/crv2017/after/images/title.jpg',
+            title: shareData.title, // 分享标题
+            link: shareData.link, // 分享链接
+            imgUrl: shareData.imgUrl,
             success: function(res) {
             },
             cancel: function(res) {
@@ -362,10 +366,10 @@
           });
           //朋友
           wx.onMenuShareAppMessage({
-            title: '全新本田CR-V 3D试驾', // 分享标题
-            desc: '让全新CR-V在你的手机里纵横驰骋', // 分享描述
-            link: shareurl, // 分享链接
-            imgUrl: 'https://www.gdcycj.com/car/crv2017/after/images/title.jpg', // 分享图标
+            title: shareData.title, // 分享标题
+            desc: shareData.info, // 分享描述
+            link: shareData.link, // 分享链接
+            imgUrl: shareData.imgUrl, // 分享图标
             type: '', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function() {
@@ -376,10 +380,10 @@
             }
           });
           wx.onMenuShareQQ({
-            title: '全新本田CR-V 3D试驾', // 分享标题
-            desc: '让全新CR-V在你的手机里纵横驰骋', // 分享描述
-            link: shareurl, // 分享链接
-            imgUrl: 'https://www.gdcycj.com/car/crv2017/after/images/title.jpg', // 分享图标
+            title: shareData.title, // 分享标题
+            desc: shareData.info, // 分享描述
+            link: shareData.link, // 分享链接
+            imgUrl: shareData.imgUrl, // 分享图标
             success: function() {
               // 用户确认分享后执行的回调函数
             },
@@ -388,10 +392,10 @@
             }
           });
           wx.onMenuShareWeibo({
-            title: '全新本田CR-V 3D试驾', // 分享标题
-            desc: '让全新CR-V在你的手机里纵横驰骋', // 分享描述
-            link: shareurl, // 分享链接
-            imgUrl: 'https://www.gdcycj.com/car/crv2017/after/images/title.jpg', // 分享图标
+            title: shareData.title, // 分享标题
+            desc: shareData.info, // 分享描述
+            link: shareData.link, // 分享链接
+            imgUrl: shareData.imgUrl, // 分享图标
             success: function() {
               // 用户确认分享后执行的回调函数
             },
@@ -400,10 +404,10 @@
             }
           });
           wx.onMenuShareQZone({
-            title: '全新本田CR-V 3D试驾', // 分享标题
-            desc: '让全新CR-V在你的手机里纵横驰骋', // 分享描述
-            link: shareurl, // 分享链接
-            imgUrl: 'https://www.gdcycj.com/car/crv2017/after/images/title.jpg', // 分享图标
+            title: shareData.title, // 分享标题
+            desc: shareData.info, // 分享描述
+            link: shareData.link, // 分享链接
+            imgUrl: shareData.imgUrl, // 分享图标
             success: function() {
               // 用户确认分享后执行的回调函数
             },

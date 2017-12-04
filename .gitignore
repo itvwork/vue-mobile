@@ -4,6 +4,8 @@ ehthumbs.db
 node_modules
 # Folder config file
 Desktop.ini
+dist
+
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
@@ -13,6 +15,7 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+*.zip
 
 # Windows shortcuts
 *.lnk
