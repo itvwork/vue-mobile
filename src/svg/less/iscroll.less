@@ -29,7 +29,6 @@
         -ms-transform: translateZ(0);
         -o-transform: translateZ(0);
         transform: translateZ(0);
-        
     }
     .scroll-say-bar {
         position: fixed;
@@ -100,10 +99,7 @@
         background-color: @bg;
         border-right: #444 solid 1px;
     }
-    .iscroll-content {
-     
-        
-    }
+    .iscroll-content {}
     .scroll-ul li {
         float: left;
         width: 100px;
@@ -242,11 +238,19 @@
     height: 50px;
     -webkit-align-items: center;
     align-items: center;
-    display: -webkit-flex;
-    display: flex;
+    display: -webkit-box;
+    display: box;
     text-align: center;
     justify-content: center;
     -webkit-box-align: center;
+    .align {
+        display: table-cell;
+        height: 50px;
+        width: 96px;
+        text-align: center;
+        vertical-align: middle;
+        white-space: normal;
+    }
 }
 
 .left-base-title {
@@ -257,10 +261,10 @@
         position: absolute;
         left: 96px;
         top: 0px;
-       
         background-color: @bg;
         height: 30px;
-        box-sizing: border-box; padding-right: 10px;
+        box-sizing: border-box;
+        padding-right: 10px;
     }
 }
 

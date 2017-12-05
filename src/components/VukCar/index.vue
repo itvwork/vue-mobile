@@ -22,19 +22,19 @@
                                 <em><i class="icon-none"></i>无</em>
                             </div>
                         </li>
-                        <li class="left-base-item" v-for="(p,i) in item.data"  :class="{islike:item.dislike,litlike:p.dislike}"      >{{p.name}}</li>
+                        <li class="left-base-item" v-for="(p,i) in item.data"  :class="{islike:item.dislike,litlike:p.dislike}"     ><span class="align"  v-html="p.name"></span></li>
                     </template>
                     </ul>
                 </div>
             </div>
             <div class="clear"></div>
         </div>
-        <div class="scroll-say-bar">{{tip}}
+        <div class="scroll-say-bar">{{delHtmlTag(tip)}}
             <div class="left-say-bar" :style="{width:leftbar+'px'}"><em><i class="icon-stand"></i>标配</em><em><i class="icon-nostand"></i>选配</em><em><i class="icon-none"></i>无</em></div>
         </div>
         <div class="iscroll-title" :style="{transform: 'translate('+titlePos+'px,0px)'}">
             <ul class="car-title">
-                <li class="item-car-title" v-for="(item,index) in showtitle"><i  @click="del(index)"></i>{{item.name.value}}</li>               
+                <li class="item-car-title" v-for="(item,index) in showtitle"  ><i  @click="del(index)" ></i><span v-html="item.name.value"></span></li>               
             </ul>
         </div>
         <div class="left-oper" :class="{active:hide}" @click="hide=!hide">
@@ -42,6 +42,8 @@
         </div>
     </div>
 </template>
+
+
 <script>
 export default {
   props: {
@@ -58,10 +60,10 @@ export default {
       leftTitle: [],
       param: [],
       hide: false,
-      leftbar:'',
+      leftbar: "",
       begin: {
-         showtitle: [],
-         leftTitle: [],
+        showtitle: [],
+        leftTitle: []
       },
       tip: "基本参数"
     };
@@ -72,23 +74,22 @@ export default {
   mounted() {
     let self = this;
     this.start();
-     this.scroll.destroy();
-     this.leftbarfun();
-     window.addEventListener('resize',function(){
-       self.leftbarfun();
-     })
-     
+    this.scroll.destroy();
+    this.leftbarfun();
+    window.addEventListener("resize", function() {
+      self.leftbarfun();
+    });
   },
   updated() {
     this.scroll.refresh();
-
-   
   },
 
   methods: {
-    leftbarfun(){
-      
-      this.leftbar=document.body.offsetWidth-96;
+    delHtmlTag(str) {
+      return str.replace(/<[^>]+>/g, ""); //去掉所有的html标记
+    },
+    leftbarfun() {
+      this.leftbar = document.body.offsetWidth - 96;
     },
     restart() {
       this.showtitle = JSON.parse(JSON.stringify(this.begin.showtitle));
@@ -102,17 +103,16 @@ export default {
         "http://h53d.3dwgc.com/model/getContent",
         {
           data: {
-            id: 7
+            id: 9
           }
         }
       );
-      
+
       let res = JSON.parse(data.data.content);
-     console.log(res);
+
       this.name(res);
       this.like();
       this.leftnav();
-     
     },
     del(index) {
       if (this.param.length <= 1) return;
@@ -129,14 +129,13 @@ export default {
         scrollX: true,
         bounce: false,
         probeType: 3,
-        deceleration: 0.006,
-       // ignoreBoundaries: true
+        deceleration: 0.006
+        // ignoreBoundaries: true
       });
       let self = this;
       this.scroll.on("scroll", function() {
         self.titlePos = this.x;
       });
-   
     },
     //查找相同的数据
     like() {
@@ -213,11 +212,10 @@ export default {
         });
         this.begin.showtitle.push({
           name: name[i]
-        })
+        });
         paramval[i] = [];
       }
 
-     
       var param = data.param;
       var paramHtml = "";
       for (var i = 0, li = param.length; i < li; i++) {
